@@ -1,0 +1,48 @@
+<div class="content-container" ng-controller="VaultsController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li class="active">{{'label.anchor.vaults' | translate}}</li>
+    </ul>
+
+<div class="card" >
+<div class="content">
+    <div class="toolbar">
+        <div class="row">
+        	<div class="col-md-6">
+        	</div>
+            <div class="col-md-6">
+                <div class="pull-right">
+                    <a href="#/createvault" class="btn btn-primary" has-permission='CREATE_VAULT'><i class="fa fa-plus "></i>&nbsp;&nbsp;{{'label.button.createvault' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div>
+        <api-validate></api-validate>
+        <table class="table">
+            <thead>
+            <tr class="graybg">
+                <th>{{'label.heading.cashmgmt.officeName' | translate}}</th>
+                <th>{{'label.heading.assetglmapping' | translate}}</th>
+                <th>{{'label.heading.maxcashlimit' | translate}}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="pointer-main" ng-repeat="vault in vaults | orderBy:'vault.officeName'  | filter:filterText">
+                <td class="pointer" data-ng-click="routeTo(vault.id)">{{vault.officeName}}</td>
+                <td class="pointer" data-ng-click="routeTo(vault.id)">{{vault.assetGlName}}</td>
+                <td class="pointer" data-ng-click="routeTo(vault.id)">{{vault.maximumCashLimit}}</td>
+                <td >
+
+                    <a class="btn btn-info" data-ng-click="routeTo(vault.id)"><i class="fa fa-eye"></i>&nbsp;&nbsp;{{'label.button.view' | translate}}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="#/editvault/{{vault.id}}" class="btn btn-primary" has-permission='UPDATE_VAULT'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+                        'label.button.edit' | translate }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

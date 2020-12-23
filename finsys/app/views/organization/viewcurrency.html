@@ -1,0 +1,59 @@
+<div class="content-container" ng-controller="ViewCurrencyController">
+	<ul class="breadcrumb">
+    	<li><a href="#/currconfig">{{'label.heading.currency' | translate}}</a></li>
+        <li class="active">{{'label.anchor.currencyconfig' | translate}}</li>
+    </ul>
+    <div class="card">
+    <div class="content">
+	   	<br>
+	   	<div class="col-md-4">
+	   		<span class="">{{'label.heading.currencyname' | translate}} : {{currency.name}} </span>
+	   	</div>
+	   	<div style="color:red" ng-repeat="error in customErrors">
+	   		{{error.msg}}
+	   	</div>
+	   	<form name="addDenominationsForm" novalidate="" class="form-horizontal">
+	   	<api-validate></api-validate>
+	    	<div>
+	    	<br>
+		    	<div class="col-md-12">
+		    	<br>
+		    	<div class="form-group">
+		    		<div class="col-md-4 col-sm-4">
+		    			<input class="form-control" name="denomValue" id="denomValue" ng-model="denomValue" type="text" ng-pattern="/^[1-9]\d*$/" required late-validate> 
+		    		</div>
+		    		<div class="col-sm-2 col-md-2">
+		            	<button ng-click="addDenomination()" has-permission="UPDATE_DENOMINATION" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+		            </div>
+		            <div class="col-sm-2">
+						<span
+							ng-show="addDenominationsForm.denomValue.$invalid && addDenominationsForm.denomValue.$dirty">
+							<small class="error"
+							ng-show="addDenominationsForm.denomValue.$error.pattern">
+								{{'label.cannot.contain.alphabets' | translate}} </small>
+						</span>
+						<form-validate valattributeform="addDenominationsForm" valattribute="denomValue" />
+					</div>
+		    	</div>
+	            <div class="clear"></div>
+	            <div ng-repeat="denomination in formData.denominations track by $index">
+	                <div class="col-sm-4 col-md-4">
+	                    <input disabled="" class="form-control input-xxlarge"  placeholder={{denomination}}
+	                       type="text"/>&nbsp;&nbsp;
+	                </div>
+	                <div class="col-sm-2 col-md-2">
+	                    <a ng-click='deleteDenomination($index)' has-permission='UPDATE_DENOMINATION'><i class="fa fa-times-circle fa-2x"></i></a>
+	                </div>
+              	</div>
+	    	</div>
+		    	<div class="col-md-offset-5">
+		            <button id="cancel" type="reset" ng-click="cancel()" class="btn btn-default">{{'label.button.cancel' | translate}}
+		            </button>
+		            <button id="save" type="submit" ng-click="submit()" has-permission='UPDATE_DENOMINATIONS' class="btn btn-primary">{{'label.button.save' | translate}}
+		            </button>
+	           	</div>
+	    	</div>
+    	</form>
+    </div>
+	</div>
+</div> 

@@ -1,0 +1,449 @@
+<form name="editAgentform" novalidate="" class="content-container form-horizontal" ng-controller="EditAgentController"
+      rc-submit="submit()">
+        <ul class="breadcrumb">
+            <li><a href="#/agents">{{'Agents' | translate}}</a></li>
+            <li><a href="#/viewclient/{{clientId}}">{{'View Agent' | translate}}</a></li>
+            <li class="active"><!--{{'label.anchor.editclient' | translate}}-->Edit Agent</li>
+        </ul>
+    <api-validate></api-validate>
+    <div class="card well">
+	    <fieldset>
+	        <legend>{{'label.heading.editagent' | translate}}</legend>
+
+	        <div class="form-group">
+	            <label class="control-label col-sm-2">{{ 'label.input.agent.outlet' | translate }}:<span
+	                    class="required">*</span></label>
+	
+	            <div class="col-sm-3">
+	                <select chosen="offices" id="officeId" ng-model="officeId"  class="form-control"
+	                        ng-options="office.id as office.name for office in offices" value="{{office.id}}"
+	                        disabled="disabled">
+	                </select>
+	            </div>
+
+				
+	        </div>
+
+			<div class="form-group">
+					<label class="control-label col-sm-2">{{'label.input.clienttype'
+						| translate}}</label>
+					<div class="col-sm-3">
+						<select id="clientType" ng-model="formData.clientTypeId"
+							class="form-control"
+							ng-options="clientType.id as clientType.name for clientType in clientTypeOptions"
+							value="{{clientType.id}}" ng-change="displayAgentOrSubAgentOptions()">
+							<option value="">--{{'label.menu.clienttype' |
+								translate}}--</option>
+						</select>
+					</div>
+				</div>
+
+			<div data-ng-switch on="isSubAgent">
+				<div data-ng-switch-when="true">
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.firstname' | translate }}:<span
+								class="required">*</span></label>
+
+						<div class="col-sm-3">
+							<input type="text" max-length="50" id="firstname" name="firstname" ng-model="formData.firstname"  class="form-control" required
+							required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editAgentform" valattribute="firstname"/>
+						</div>
+					</div>
+				</div>
+	        </div>
+
+			<div data-ng-switch on="isSubAgent">
+				<div data-ng-switch-when="true">
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.middlename' | translate }}:</label>
+
+						<div class="col-sm-3">
+							<input id="middlename" max-length="50" type="text" ng-model="formData.middlename" class="form-control">
+						</div>
+					</div>
+				</div>
+	        </div>
+
+			<div data-ng-switch on="isSubAgent">
+				<div data-ng-switch-when="true">
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{ 'label.input.lastname' | translate }}:<span
+								class="required">*</span></label>
+
+						<div class="col-sm-3">
+							<input type="text" id="lastname" name="lastname" ng-model="formData.lastname"  class="form-control" required
+							required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editAgentform" valattribute="lastname"/>
+						</div>
+					</div>
+				</div>
+	        </div>
+			<div data-ng-switch on="isSubAgent">
+				<div data-ng-switch-when="false">
+					<div class="form-group">
+						<label class="control-label col-sm-2">{{'label.input.fullname' | translate}}<span
+								class="required">*</span></label>
+
+						<div class="col-sm-3">
+							<input type="text" id="fullname" name="fullname" ng-model="formData.fullname" class="form-control"
+								   required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="editAgentform" valattribute="fullname"/>
+						</div>
+					</div>
+				</div>
+			</div>
+	        <div class="form-group">
+	            <label class="control-label col-sm-2">{{ 'label.input.accno' | translate }}:</label>
+	
+	            <div class="col-sm-3">
+	                <input id="accountNo" type="text" ng-model="formData.accountNo" class="form-control" disabled="disabled">
+	            </div>
+	        </div>
+			
+	        <div class="form-group">
+	            <label class="control-label col-sm-2" for="mobileNo">{{'label.input.mobileNumber' | translate}}:<span
+					class="required">*</span>
+				</label>
+	            <div class="col-sm-3">
+					<input id="mobileNo" name="mobileNo" placeholder="+2771234567" maxlength="12" minlength="12"
+						   ng-model="formData.mobileNo" ng-pattern="/^\+\d{9,11}$/" class="form-control" />
+	            </div>
+	            <div class="col-sm-2">
+                    <span ng-show="editAgentform.mobileNo.$invalid && editAgentform.mobileNo.$dirty || editAgentform.mobileNo.$error.minlength">
+                      <small class="error" ng-show="editAgentform.mobileNo.$error.pattern">
+                          {{'label.mustbenumeric and cannot be less or more than 10 digits' | translate}}
+                      </small>
+                    </span>
+                   	<form-validate valattributeform="editAgentform" valattribute="mobileNo"/>
+	            </div>
+	        </div>
+
+			<div class="form-group"  data-ng-switch on="isSubAgent">
+				<label class="control-label col-sm-2"
+					ng-hide="isSubAgent">{{'label.input.incorporationdate'
+					| translate}}:<span class="required">*</span>
+				</label>
+				<label class="control-label col-sm-2"
+					ng-show="isSubAgent">{{'label.input.dateofbirth'
+					| translate}}:<span class="required">*</span>
+				</label>
+				
+				<div class="" ng-if="!isSubAgent">
+					<div class="col-sm-3">
+						<input id="dateOfIncorporation" type="text" name="dateOfIncorporation"
+						datepicker-pop="dd MMMM yyyy" ng-model="date.incorporationDate"
+						class="form-control" required late-validate />
+					</div>
+					<div class="col-sm-2">
+					<form-validate valattributeform="editAgentform" valattribute="dateOfIncorporation"/>
+					</div>
+					
+					</div>
+					<div class="col-sm-3" ng-if="isSubAgent">
+						<input id="dateOfBirth" type="text" name="dateOfBirth"
+							datepicker-pop="dd MMMM yyyy" ng-model="date.dateOfBirth"
+							is-open="opened1" min="minDate" max="restrictDate"
+							class="form-control" required/>
+					</div>
+					<div class="col-sm-2">
+					<form-validate valattributeform="editAgentform" valattribute="dateOfBirth"/>
+					</div>
+					<div ng-if="isSubAgent">
+							<label class="control-label col-sm-2">{{'label.input.gender'
+								| translate}}</label>
+							<div class="col-sm-3">
+								<select id="genderId" ng-model="formData.genderId"
+									class="form-control"
+									ng-options="gender.id as gender.name for gender in genderOptions"
+									value="{{gender.id}}">
+									<option value="">--{{'label.menu.gender' |
+										translate}}--</option>
+								</select>
+							</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div data-ng-switch on="isSubAgent">
+						<div data-ng-switch-when="false">
+							<label class="control-label col-sm-2">{{'label.input.incorpValidityTillDate'
+								| translate}}</label>
+							<div class="col-sm-3">
+								<input id="incorpValidityTillDate" type="text"
+									name="incorpValidityTillDate" datepicker-pop="dd MMMM yyyy"
+									ng-model="first.incorpValidityTillDate" is-open="opened1"
+									max="'2020-06-22'" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<div class="form-group" ng-if="!isSubAgent">
+				<label class="control-label col-sm-2">{{'label.input.enterpriseType'
+					| translate}}<span class="required">*</span></label>
+				<div class="col-sm-3">
+					<select id="enterpriseType" ng-model="formData.clientNonPersonDetails.enterpriseType"
+							class="form-control"
+							ng-options="enterpriseType.id as enterpriseType.name for enterpriseType in clientNonPersonEnterpriseTypeCodeOptions"
+							value="{{enterpriseType.id}}" data-ng-change="toggleAgentFields()">
+						<option value="">--{{'Enterprise Type' | translate}}--</option>
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<form-validate valattributeform="editAgentform" valattribute="agentRegNo"/>
+				</div>
+			</div>
+			<div class="form-group idOrPassDiv">
+				<label class="control-label col-sm-2" id="labelIDOrPassport" for="passportID">{{'label.input.idorpassportnumber' | translate}}<span class="required">*</span></label>
+				<div class="col-sm-3">
+					<input type="text" id="passportID" name="passportID" ng-model="formData.clientNonPersonDetails.passportID"  class="form-control"/>
+				</div>
+				<div class="col-sm-2">
+					<form-validate valattributeform="editAgentform" valattribute="passportID" />
+				</div>
+			</div>
+				<div class="form-group agentData">
+					<div data-ng-switch on="isSubAgent">
+						<div data-ng-switch-when="false">
+							<label class="control-label col-sm-2" for="incorpNumber">{{'label.input.incorpNumber' | translate}}:<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" id="incorpNumber" name="incorpNumber" ng-model="formData.clientNonPersonDetails.incorpNumber"  class="form-control"/>
+							</div>
+							<div class="col-sm-3">
+								<form-validate valattributeform="editAgentform" valattribute="incorpNumber"/>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<div class="form-group "> <!--agentData-->
+				<label class="control-label col-sm-2">{{'label.input.agentcode'
+					| translate}}<span class="required">*</span>
+				</label>
+				<div class="col-sm-3">
+					<input type="text" id="agentCode" name="agentCode"
+						   ng-model="formData.clientNonPersonDetails.agentCode" ng-pattern="/[a-zA-Z0-9]+/"
+						   class="form-control" required />
+				</div>
+				<div class="col-sm-3">
+					<form-validate valattributeform="editAgentform" valattribute="agentCode"/>
+				</div>
+			</div>
+			<div class="form-group agentData">
+				<label class="control-label col-sm-2">{{'label.input.agenttypeid'
+					| translate}}<span class="required">*</span></label>
+				<div class="col-sm-3">
+					<select id="agentTypeId" ng-model="formData.clientNonPersonDetails.agentTypeId"
+							class="form-control"
+							ng-options="agentType.id as agentType.name for agentType in clientNonPersonAgentTypeCodeOptions"
+							value="{{agentType.id}}">
+						<option value="">--{{'Agent type' | translate}}--</option>
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<form-validate valattributeform="editAgentform" valattribute="agentTypeId"/>
+				</div>
+			</div>
+
+			<div class="form-group agentData">
+				<label class="control-label col-sm-2" for="agentRegNo">{{'label.heading.agent.agentRegNo'
+					| translate}}<span class="required">*</span></label>
+				<div class="col-sm-3">
+					<input type="text" id="agentRegNo" name="agentRegNo"
+						   ng-model="formData.clientNonPersonDetails.agentRegNo" ng-pattern="/[a-zA-Z0-9]+/"
+						   class="form-control" />
+				</div>
+				<div class="col-sm-3">
+					<form-validate valattributeform="editAgentform" valattribute="agentRegNo"/>
+				</div>
+				<div class="col-sm-2">
+						<span
+								ng-show="editAgentform.agentRegNo.$invalid && editAgentform.agentRegNo.$dirty">
+							<small class="required"
+								   ng-show="editAgentform.agentRegNo.$error.pattern">
+								{{'label.mustbenumeric' | translate}} </small>
+						</span>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="control-label col-sm-2">{{'label.input.submittedon' | translate}}:</label>
+
+				<div class="col-sm-3">
+					<input id="submittedOnDate" type="text" name="submittedOnDate" datepicker-pop="dd MMMM yyyy"
+						   ng-model="date.submittedOnDate" is-open="opened1" max="restrictDate"  class="form-control"/>
+				</div>
+			</div>
+           <!-- <div class="form-group">
+		    	<label class="control-label col-sm-2">{{ 'label.input.agent.network.id' | translate }}:
+				</label>
+		    	<div class="col-sm-3">
+		        <input id="externalId" name="externalId" type="text" ng-model="formData.externalId" class="form-control">
+		    	</div>
+		    	<div class="col-sm-3">
+					<form-validate valattributeform="editAgentform" valattribute="externalId"/>
+				</div>
+			</div> -->
+				<div class="form-group"  ng-if="!isSubAgent">
+					<label class="control-label col-sm-2">{{'label.input.compliancestatusid'
+						| translate}}</label>
+					<div class="col-sm-3">
+						<select id="complianceStatusId"
+							ng-model="formData.clientNonPersonDetails.complianceStatusId" class="form-control"
+							ng-options="complianceStatus.id as complianceStatus.name for complianceStatus in clientNonPersonComplainsStatusCodeOptions"
+							value="{{complianceStatus.id}}">
+							<option value="">--{{'label.menu.compliancestatusid' |
+								translate}}--</option>
+						</select>
+					</div>
+				</div>
+				<!--<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2" for="financeYear">{{'label.input.financeyear'
+						| translate}}
+					</label>
+					<div class="col-sm-3">
+						<input type="text" id="financeYear" maxlength="4" name="financeYear"
+							ng-model="formData.clientNonPersonDetails.financeYear" class="form-control"
+							ng-pattern="/^\d{4}/"  />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-if="editAgentform.financeYear.$invalid && editAgentform.financeYear.$dirty || editAgentform.mobileNo.$error.maxlength">
+							<small class="error required"
+							ng-if="editAgentform.financeYear.$error.pattern">
+								{{'validation.msg.agent.year.cannot.exceed.morethenfour.char' |
+								translate}} </small>
+						</span>
+					</div>
+				</div>
+				<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2" for="taxNumber">{{'label.heading.agent.taxNumber'
+						| translate}}
+					</label>
+					<div class="col-sm-3">
+						<input type="text" id="taxNumber" name="taxNumber"
+							ng-model="formData.clientNonPersonDetails.taxNumber" ng-pattern="/[a-zA-Z0-9]+/"
+							class="form-control"  />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-show="editAgentform.taxNumber.$invalid && editAgentform.taxNumber.$dirty">
+							<small class="error required"
+							ng-show="editAgentform.taxNumber.$error.pattern">
+								{{'label.mustbenumeric' | translate}} </small>
+						</span>
+						<form-validate valattributeform="editAgentform"
+							valattribute="taxNumber" />
+					</div>
+				</div>
+				<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2" for="bankName">{{
+						'label.input.bankname' | translate }}
+					</label>
+					<div class="col-sm-3">
+						<input type="text" id="bankName" name="bankName"
+							ng-model="formData.clientNonPersonDetails.bankName" class="form-control" 
+							ng-pattern="/(^[A-z])[A-z]*/"  />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-show="editAgentform.bankName.$invalid && editAgentform.bankName.$dirty">
+							<small class="error required"
+							ng-show="editAgentform.bankName.$error.pattern">
+								{{'validation.msg.agent.bankname.cannot.start.specialchar.ornumber'
+								| translate}} </small>
+						</span>
+						<form-validate valattributeform="editAgentform"
+							valattribute="bankName" />
+					</div>
+				</div>
+				<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2" for="bankCode">{{'label.heading.agent.bankCode'
+						| translate}}
+					</label>
+					<div class="col-sm-3">
+						<input type="text" id="bankCode" name="bankCode"
+							ng-model="formData.clientNonPersonDetails.bankCode" ng-pattern="/[a-zA-Z0-9]+/"
+							class="form-control"   />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-show="editAgentform.bankCode.$invalid && editAgentform.bankCode.$dirty">
+							<small class="error required"
+							ng-show="editAgentform.bankCode.$error.pattern">
+								{{'label.mustbenumeric' | translate}} </small>
+						</span>
+						<form-validate valattributeform="editAgentform"
+							valattribute="bankCode" />
+					</div>
+				</div>
+				<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2">{{'label.heading.agent.accountType'
+						| translate}}</label>
+					<div class="col-sm-3">
+						<select id="accountTypeId" ng-model="formData.clientNonPersonDetails.accountTypeId"
+							class="form-control"
+							ng-options="accountType.id as accountType.name for accountType in clientNonPersonAccountTypeOptions"
+							value="{{accountType.id}}">
+							<option value="">--{{'select' | translate}}--</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2" for="accountNumber">{{'label.heading.agent.accountNumber'
+						| translate}}
+					</label>
+					<div class="col-sm-3">
+						<input type="text" id="accountNumber" name="accountNumber"
+							ng-model="formData.clientNonPersonDetails.accountNumber" ng-pattern="/[a-zA-Z0-9]+/"
+							class="form-control"   />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-show="editAgentform.accountNumber.$invalid && editAgentform.accountNumber.$dirty">
+							<small class="error required"
+							ng-show="editAgentform.accountNumber.$error.pattern">
+								{{'label.mustbenumeric' | translate}} </small>
+						</span>
+						<form-validate valattributeform="editAgentform"
+							valattribute="accountNumber" />
+					</div>
+				</div>
+				<div class="form-group" ng-if="!isSubAgent">
+					<label class="control-label col-sm-2" for="accountName">{{
+						'label.heading.agent.accountName' | translate }}
+					</label>
+					<div class="col-sm-3">
+						<input type="text" id="accountName" name="accountName"
+							ng-model="formData.clientNonPersonDetails.accountName" class="form-control" 
+							ng-pattern="/(^[A-z])[A-z.'-]*/"  />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-show="editAgentform.accountName.$invalid && editAgentform.accountName.$dirty">
+							<small class="error required"
+							ng-show="editAgentform.accountName.$error.pattern">
+								{{'validation.msg.agent.bankname.cannot.start.specialchar.ornumber'
+								| translate}} </small>
+						</span>
+						<form-validate valattributeform="editAgentform"
+							valattribute="accountName" />
+					</div>
+				</div> -->
+	        <div class="col-md-offset-3">
+	            <a id="cancel" href="#/viewclient/{{clientId}}">
+	                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+	            </a>
+	            <button id="save" type="submit"  data-ng-click="submit()" class="btn btn-primary" has-permission='UPDATE_CLIENT'>{{'label.button.save' | translate}}</button>
+	        </div>
+	
+	    </fieldset>
+	</div>
+</form>

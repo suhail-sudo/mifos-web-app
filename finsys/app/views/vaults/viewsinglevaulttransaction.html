@@ -1,0 +1,55 @@
+<div class="content-container" ng-controller="ViewSingleVaultTransactionController">
+    <ul class="breadcrumb">
+        <li><a href="#/vaults/">{{'label.anchor.vaults' | translate}}</a></li>
+        <li><a href="#/vaults/{{vaultId}}/vaulttransactions">{{'label.anchor.viewvaulttransactions' | translate}}</a></li>
+        <li class="active">View Transaction</li>
+    </ul>
+    <div class = "card">
+	    <div class="content">
+		    <div class="container-fluid">
+		       	<div class="col-md-12">
+		       		<div class="pull-right" ng-hide="hideChangeStatusButton">
+		                <div class="form-group">
+                       		 <button id="save" type="submit" ng-click="submit()" has-permission='UPDATE_VAULTTRANSACTION' class="btn btn-primary">
+                       		 {{statusLabel}}</button>
+         				</div>
+		            </div>
+		            <div ng-hide="hideview">
+		            	<div class="col-md-4 control-label">
+			            	<h3>
+			            		<strong>
+			            			Vault Transaction Details
+			            		</strong>
+			            	</h3>
+		           		 </div>
+		            <table class="table table-bordered view-table">
+		                <tr>
+		                    <th width="50%">{{'label.heading.transactiondate' | translate}}</th>
+		                    <td>{{transaction.transactionDate | DateFormat}}</td>
+		                <tr>
+		                    <th>{{'label.heading.transferfrom' | translate}}</th>
+		                    <td>{{transaction.transferFromOfficeName}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.transferto' | translate}}</th>
+		                    <td>{{transaction.transferToOfficeName}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.txnamount' | translate}}</th>
+		                    <td>{{transaction.amount}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.currencycode' | translate}}</th>
+		                    <td>{{transaction.currencyCode}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.vault.status' | translate}}</th>
+		                    <td>{{transaction.status.value}}</td>
+		                </tr>
+		            </table>
+		            </div>
+		     	</div>
+		    </div>
+	    </div>
+     </div>
+</div>

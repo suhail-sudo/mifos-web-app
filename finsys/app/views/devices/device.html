@@ -1,0 +1,53 @@
+<div class="content-container" ng-controller="DeviceController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.anchor.devices' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+
+    <div class="card">
+    	<div class="toolbar">
+            <h4>List of Devices</h4>
+            <div class="col-sm-4 pull-right" style="padding-top:5px;">
+        		<a href="#/adddevice" class="btn btn-primary pull-right" has-permission='CREATE_OTHERUSERDEVICE'>
+        		<i class="fa fa-plus"></i> {{'label.button.adddevice' | translate}}</a> &nbsp;&nbsp;
+        	</div>
+    	</div>
+    	<div class="content">
+            <br>
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                	<th>{{'label.heading.username' | translate}}</th>
+                    <th>{{'label.heading.primaryimeino' | translate}}</th>
+                    <th>{{'label.heading.secondaryimeino' | translate}}</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+                </thead>
+
+                <tbodirPaginationdy>
+               <tr class="pointer-main" dir-paginate="device in devices | itemsPerPage: devicesPerPage"
+                    total-items="totalDevices"  pagination-id="devices">
+                    <td class="pointer" data-ng-click="routeTo(device.id)">{{device.appUserName}}</td>
+                    <td class="pointer" data-ng-click="routeTo(device.id)">{{device.imei1}}</td>
+                    <td class="pointer" data-ng-click="routeTo(device.id)">{{device.imei2}}</td>
+                    <td class="pointer" data-ng-click="routeTo(device.id)">{{device.startDate | DateFormat }}</td>
+                    <td class="pointer" data-ng-click="routeTo(device.id)">{{device.endDate | DateFormat }}</td>
+                    
+                </tr>
+                </tbody>
+
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+            template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+            on-page-change="getResultsPage(newPageNumber)" pagination-id="devices">
+            </dir-pagination-controls>
+
+
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,343 @@
+<div class="content-container" ng-controller="CreateOfficeController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li><a href="#/offices?isOutlet={{isOutlet}}">{{isOutlet ? 'label.anchor.manageoutlets' : 'label.anchor.manageoffices' | translate}}</a></li>
+        <li class="active">{{isOutlet ? 'label.anchor.createoutlet' : 'label.anchor.createoffice' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<div class="toolbar">
+    			<h4>{{isOutlet ? 'label.anchor.createoutlet' : 'label.heading.createoffice' | translate}}</h4>
+    		</div>
+    		<br/>
+    		<form name="createofficeform" id="createofficeform" novalidate="" class="form-horizontal" rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2">{{isOutlet ? 'label.input.agent.outlet' : 'label.input.office' | translate }}<span
+    		                        class="required">*</span></label>
+    		
+    		                <div class="col-sm-3">
+    		                    <input id="name" ng-autofocus="true" type="text" name="name" ng-model="formData.name" class="form-control"
+    		                           required late-validate/>
+    		                </div>
+    		                <div class="col-sm-3">
+    		                    <form-validate valattributeform="createofficeform" valattribute="name"/>
+    		                </div>
+    		            </div>
+    		        
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2">{{ isOutlet? 'label.input.parentoutlet' : 'label.input.parentoffice' | translate }}<span class="required">*</span></label>
+    		
+    		                <div class="col-sm-3">
+    		                    <select chosen="offices" id="parentId" name="parentId" ng-model="formData.parentId" class="form-control"
+    		                            ng-options="office.id as office.name for office in offices"
+    		                            value="{{office.id}}" required late-validate><option value=""></option></select>
+    		                </div>
+    		                <div class="col-sm-3">
+    		                    <form-validate valattributeform="createofficeform" valattribute="parentId"/>
+    		                </div>
+    		            </div>
+    		            
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2">{{isOutlet ? 'Outlet Type' : 'Office Type'}} <span class="required">*</span></label>
+    		                <div class="col-sm-3">
+    		                    <select chosen="officeTypes" id="officeTypeId" name="officeTypeId" ng-model="formData.officeTypeId" class="form-control"
+    		                            ng-options="officeType.id as officeType.name for officeType in officeTypes"
+    		                            value="{{officeType.id}}" required late-validate><option value=""></option></select>
+    		                </div>
+    		                <div class="col-sm-3">
+    		                    <form-validate valattributeform="createofficeform" valattribute="officeTypeId"/>
+    		                </div>
+    		            </div>
+    		        
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2">{{ 'label.input.openedon' | translate }}<span
+    		                        class="required">*</span></label>
+    		
+    		                <div class="col-sm-3">
+    		                    <input id="openingDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.date" class="form-control"
+    		                     is-open="opened" min="minDat()" max="restrictDate" required late-validate/>
+    		                </div>
+    		            </div>
+    		        
+    		            <div class="form-group hide">
+    		                <label class="control-label col-sm-2">{{ isOutlet ? 'label.heading.outletcode' : 'label.heading.partnercode' | translate }}</label>
+    		
+    		                <div class="col-sm-3">
+    		                    <input id="externalId" type="text" name="externalId" class="form-control" ng-model="formData.externalId">
+    		                </div>
+						</div>
+						<div class="form-group">
+								<label class="control-label col-sm-2">Nearest Branch </label>
+				
+								<div class="col-sm-3">
+									<select chosen="offices" id="nearestBranchId" ng-model="formData.nearestBranchId" class="form-control"
+											ng-options="office.id as office.name for office in nearestBranches"
+											value="{{office.id}}"><option value=""></option></select>
+								</div>
+						</div>
+
+					<div class="form-group hide">
+						<label class="control-label col-sm-2" for="profile_no">External ID<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input type="number" id="profile_no" name="profile_no" maxlength="10" minlength="9" ng-model="formData.profile_no"
+								   class="form-control" ng-pattern="/^\d{9,10}$/" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="profileNo"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="compCCNumber">Company CC Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="text" id="compCCNumber" name="compCCNumber" ng-model="formData.compCCNumber"
+								   class="form-control"  ng-pattern="/^\d{9,10}$/" maxlength="10" minlength="4" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="compCCNumber"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="vatNo">VAT Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="text" id="vatNo" name="vatNo" ng-model="formData.vatNo"
+								   class="form-control"  ng-pattern="/^\d{9,10}$/" maxlength="10" minlength="4" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="vatNo"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="firstName">First Name
+							<span class="required">*</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" id="firstName" required late-validate name="firstName" ng-model="formData.firstName" class="form-control" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="firstName"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="lastName">{{'label.input.lastname' | translate}}
+							<span class="required">*</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" id="lastName" name="lastName" ng-model="formData.lastName" class="form-control"
+								   ng-pattern="/(^[A-z])[A-z.'-]*/" required late-Validate/>
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="lastName"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="passportNumber">Passport / ID Number
+							<span class="required">*</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" id="passportNumber" name="passportNumber" ng-model="formData.passportNumber" class="form-control"
+								   required late-Validate/>
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="passportNumber"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="emailAddress">{{'label.input.email' | translate}}<span
+								class="required">*</span></label>
+
+						<div class="col-sm-3">
+							<input type="email" id="emailAddress" name="emailAddress" class="form-control" ng-model="formData.emailAddress" required late-Validate/>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createofficeform" valattribute="emailAddress"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password">{{'label.input.password' | translate}}<span
+								class="required">*</span></label>
+
+						<div class="col-sm-3">
+							<input type="text" id="password" name="password" ng-model="formData.password" class="form-control" required
+								   late-Validate>
+						</div>
+						<div class="col-sm-3">
+							<form-validate valattributeform="createofficeform" valattribute="password"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="contactNo">Contact Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="tel" id="contactNo" name="contactNo"  ng-model="formData.contactNo"
+								   class="form-control"  ng-pattern="/^\+\d{9,12}$/" maxlength="12" minlength="9" placeholder="+27712345678" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="contactNo"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="cellphoneNumber">Cellphone Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="tel" id="cellphoneNumber" name="cellphoneNumber"  ng-model="formData.cellphoneNumber"
+								   class="form-control"  ng-pattern="/^\+\d{9,12}$/" maxlength="12" minlength="9" placeholder="+27712345678" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="createofficeform" valattribute="cellphoneNumber"/>
+						</div>
+					</div>
+
+					<div ng-show="enableAddress" class="form-group">
+						<div class="form-group">
+							<div class="control-label col-sm-2">
+								<h3><strong>{{ 'label.input.address' | translate }}</strong>&nbsp;<a ng-click="addAddress()" ng-if="addressArray.length < 1" ><i class="fa fa-plus" title="{{'label.button.addAddress' | translate}}"></i></a></h3>
+							</div>
+							</div>
+							<div ng-repeat="addr in addressArray">
+							<div class="form-group" >
+								<div class="control-label col-sm-2">
+									<label>{{ 'label.input.addressType' | translate }}<span class="required">*</span></label>
+								</div>
+								<div class="col-sm-3"  >
+									<select chosen="addressTypes" name="addressType" ng-model="addressArray[$index].addressTypeId"  class="form-control"
+										ng-options="addressType.id as addressType.name for addressType in addressTypes track by addressType.id"
+										value="addressTypeId" required late-validate><option value=""></option></select>
+								</div>
+								<div class = "col-sm-2">
+									<form-validate valattributeform="createofficeform" valattribute="addressType"/>
+								</div>
+							</div>
+							<div class="form-group" ng-show="street">
+								<div class="control-label col-sm-2">
+									<label>{{ 'label.input.street' | translate }}<span class="required">*</span></label>
+								</div>
+								<div class="col-sm-3">
+									<input type="text" name="street" id="street"  ng-model="addressArray[$index].street"  class="form-control" required late-validate/>
+								</div>
+								<div class = "col-sm-2">
+									<form-validate valattributeform="createofficeform" valattribute="street"/>
+								</div>
+							</div>
+							<div class="form-group" ng-show="addressLine1">
+								<label class="control-label col-sm-2" >{{ 'label.input.addressline1' | translate }}<span class="required">*</span></label>
+								<div class="col-sm-3">
+									<input type="text"  name="addressline1" id="addressline1" ng-model="addressArray[$index].addressLine1"  class="form-control" required late-validate>
+								</div>
+								<div class = "col-sm-2">
+									<form-validate valattributeform="createofficeform" valattribute="addressline1"/>
+								</div>
+							</div>
+							<div class="form-group" ng-show="addressLine2">
+								<label class="control-label col-sm-2" >{{ 'label.input.addressline2' | translate }}</label>
+								<div class="col-sm-3">
+									<input type="text"  name="addressline2" ng-model="addressArray[$index].addressLine2"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group" ng-show="city">
+								<label class="control-label col-sm-2" >{{ 'label.input.city' | translate }}</label>
+								<div class="col-sm-3">
+									<input type="text" name="city" ng-model="addressArray[$index].city"  class="form-control" required late-validate>
+								</div>
+								<div class="col-sm-2">
+									<form-validate valattributeform="createofficeform"
+										valattribute="city" />
+								</div>
+							</div>
+							<div class="form-group" ng-show="countyDistrict">
+								<label class="control-label col-sm-2" >{{ 'label.input.county_district' | translate }}</label>
+								<div class="col-sm-3">
+									<input type="text"  name="county_district" ng-model="addressArray[$index].countyDistrict"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group" ng-show="stateProvinceId">
+								<div class="control-label col-sm-2">
+									<label>{{ 'label.input.state_province' | translate }}</label>
+								</div>
+								<div class="col-sm-3" >
+									<select chosen="stateOptions" name="stateOptions" ng-model="addressArray[$index].stateProvinceId"  class="form-control"
+										ng-options="stateOption.id as stateOption.name for stateOption in stateOptions track by stateOption.id"
+										value="stateProvinceId" required late-validate><option value=""></option></select>
+								</div>
+								<div class="col-sm-2">
+									<form-validate valattributeform="createofficeform"
+										valattribute="stateOptions" />
+								</div>
+							</div>
+							<div>
+							</div>
+							<div class="form-group" ng-show="countryId">
+								<div class="control-label col-sm-2">
+									<label>{{ 'label.input.country' | translate }}</label>
+								</div>
+								<div class="col-sm-3" >
+									<select chosen="countryOptions" name="countryOptions" ng-model="addressArray[$index].countryId"  class="form-control"
+										ng-options="countryOption.id as countryOption.name for countryOption in countryOptions track by countryOption.id"
+										value="countryId" required late-validate><option value=""></option></select>
+								</div>
+								<div class="col-sm-2">
+									<form-validate valattributeform="createofficeform"
+										valattribute="countryOptions" />
+								</div>
+							</div>
+							<div class="form-group" ng-show="postalCode">
+							<label class="control-label col-sm-2">{{
+								'label.input.postal_code' | translate }}<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" name="postal_code" id="postal_code"
+									ng-model="addressArray[$index].postalCode" ng-pattern="/^[a-zA-Z0-9]*$/" class="form-control" late-validate required>
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="createofficeform"
+									valattribute="postal_code" />
+							</div>
+							<div class="col-sm-2">
+								<span
+								ng-if="createofficeform.postal_code.$invalid && createofficeform.postal_code.$dirty">
+								<small class="error required"
+								ng-if="createofficeform.postal_code.$error.pattern">
+									{{'label.mustalphabenumeric' | translate}} </small>
+								</span>
+							</div>
+						</div>
+							<div class="form-group" ng-show="latitude">
+								<label class="control-label col-sm-2" >{{ 'label.input.latitude' | translate }}</label>
+								<div class="col-sm-3">
+									<input type="text"  name="latitude" ng-model="addressArray[$index].latitude"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group" ng-show="longitude">
+								<label class="control-label col-sm-2" >{{ 'label.input.longitude' | translate }}</label>
+								<div class="col-sm-3">
+									<input type="text"  name="longitude" ng-model="addressArray[$index].longitude"  class="form-control">
+								</div>
+							</div>
+							<div class="form-group" ng-show="isActive">
+								<label class="control-label col-sm-2" >{{'label.input.is_active' | translate}} </label>
+								<div class="col-sm-3">
+									<input class="input-mini-small" type="checkbox"
+										ng-model="addressArray[$index].isActive">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-offset-3">
+    		            <a id="cancel" href="#/offices?isOutlet={{isOutlet}}">
+    		                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    		            </a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_OFFICE'>{{'label.button.save' | translate}}</button>
+    		        </div>
+				</fieldset>
+			</form>
+			
+    	</div>
+    </div>
+</div>

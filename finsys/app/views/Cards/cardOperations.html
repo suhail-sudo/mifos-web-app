@@ -1,0 +1,143 @@
+<div class="content-container" ng-controller="ViewClientCardInformationController">
+    <ul class="breadcrumb">
+        <li class="active"><a href="#/richdashboard">{{'label.card' | translate}}</a></li>
+        <li><a href="#/cardOpr">Client List</a></li>
+        <li>Client Card Management</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4>{{'label.cards.operations' | translate}}</h4>
+            </div>
+            <br>
+            <div class="col-md-11 col-sm-11 btn-group row pull-right text-center">
+                <button type="button" id="linkCard" name="cardOprs" class="btn btn-primary ng-binding " data-ng-click="initiateLink()">
+                    <i class="fa fa-arrow-right icon-white"></i> Link Card
+                </button>
+                <button type="button" id="blockCard" name="cardOprs" class="btn btn-primary hide" data-ng-click="blockClientCard()">
+                    <i class="fa fa-shield"></i> Block Card
+                </button>
+                <button type="button" id="resetPinCard" name="cardOprs" class="btn btn-primary" data-ng-click="resetCardPin()">
+                    <i class="fa fa-edit"></i> Pin Reset
+                </button>
+                <button type="button" id="deactivateCard" name="cardOprs" class="btn btn-primary" data-ng-click="deactivateCard(this)">
+                    <i class="fa fa-ban"></i> <!--{{ btnText }} -->Deactivate Card
+                </button>
+                <button type="button" id="balanceSyncCard" name="cardOprs" class="btn btn-primary" data-ng-click="getClientBalance()">
+                    <i class="fa fa-refresh"></i> Balance Sync
+                </button>
+                <button type="button" id="passwordResetCard" name="cardOprs" class="btn btn-primary hide" data-ng-click="resetPass()">
+                    <i class="fa fa-repeat"></i> Password Reset
+                </button>
+                <button type="button" id="resetPassword" name="cardOprs" class="btn btn-primary" data-ng-click="resetCardPassword()">
+                    <i class="fa fa-repeat"></i> Reset Password
+                </button>
+                <button type="button" id="stopCard" name="cardOprs" class="btn btn-primary" data-ng-click="stopCard()">
+                    <i class="fa fa-shield"></i> Stop Card
+                </button>
+            </div>
+            <br>
+            <hr>
+            <div class="modal-header silver" id="confirmDocuments" style="display: none;">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="center">Confirm Required Documents</h3>
+                        </div>
+                        <div class="modal-body">
+                            <label><strong>Card Envelope Uploaded? </strong></label>
+                                <input class="pull-right" value="cardEnvelope" type="checkbox" id="cardEnvelope" name="cardEnvelope" ng-model="cardEnvelope"><br>
+                            <hr><div><label><strong>ID/Passport Document Uploaded? </strong></label>
+                                <input class="pull-right" value="identityPassport" type="checkbox" id="identityPassport" name="identityPassport" ng-model="identityPassport">
+                        </div><hr style="margin-top: auto;">
+                            <div><hr><label><strong>Proof of Residence Uploaded? </strong></label>
+                                <input class="pull-right" value="proofOfResidence" type="checkbox" id="proofOfResidence" name="proofOfResidence" ng-model="proofOfResidence">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="confirm" data-ng-click="closeModal()">Confirm Docs</button>
+                            <button type="button" class="btn btn-primary" id="cancel" data-ng-click="cancelModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="inContent">
+            <div> <h3><strong>{{client.displayName}}</strong></h3>
+                <br>
+                <label class="control-label col-sm-12 pull-left"><h4><strong>Card Account Info </strong></h4></label>
+                <hr>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Last Active</th>
+                    <th>Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="pointer-main ng-scope"  ng-repeat="savingaccount in clientESavingsAcc.savingsAccounts | orderBy:'id':true | filter:isSavingNotClosed">
+                    <td><i uib-tooltip-placement="right" ng-show="savingaccount.subStatus.id==0" uib-tooltip="{{savingaccount.status.value}}" class="fa fa-stop {{savingaccount.status.code | StatusLookup}}"></i>
+                        <i uib-tooltip-placement="right" ng-hide="savingaccount.subStatus.id==0"  uib-tooltip="{{savingaccount.status.value+':'+savingaccount.subStatus.value}}" class="fa fa-stop {{savingaccount.status.code+savingaccount.subStatus.value | StatusLookup}}"></i>
+                        {{savingaccount.accountNo}}
+                    </td>
+                    <td class="pointer">{{savingaccount.lastActiveTransactionDate|DateFormat}}</td>
+                    <td class="pointer">{{savingaccount.currency.code}} {{savingaccount.accountBalance|number}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Last Active</th>
+                    <th>Balance</th>
+                </tr>
+                </tfoot>
+            </table>
+            <br>
+            <hr>
+            <label class="control-label col-sm-12" id="cardInfoHead"><h4><strong>Card Info </strong></h4></label>
+            <table class="table" id="cardInfo">
+                <thead>
+                <tr>
+                    <th>Card Number</th>
+                    <th>Expiry date</th>
+                    <th>Status</th>
+                    <th>Card Balance</th>
+                    <th>Profile Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--
+                <i uib-tooltip-placement="right" ng-show="savingaccount.subStatus.id==0" uib-tooltip="{{savingaccount.status.value}}" class="fa fa-stop {{savingaccount.status.code | StatusLookup}}"></i>
+                        <i uib-tooltip-placement="right" ng-hide="savingaccount.subStatus.id==0"  uib-tooltip="{{savingaccount.status.value+':'+savingaccount.subStatus.value}}" class="fa fa-stop
+                        {{savingaccount.status.code+savingaccount.subStatus.value | StatusLookup}}"></i>
+                        <td ng-if="user.FLG_MNT_STATUS == 'A'" class="center">Active</td>
+                        <td ng-if="user.FLG_MNT_STATUS == 'D'" class="center">Inactive</td>
+                --->
+                <tr class="pointer-main ng-scope" ng-repeat="clientCardDetailsData in clientCardDetail" >
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" class="pointer">{{clientCardDetailsData.card_number}}</td>
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" class="pointer">{{clientCardDetailsData.card_expiry_date |DateFormat}}</td>
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" ng-if="clientCardDetailsData.activation_status == 'A'" class="pointer">
+                             <i class="fa fa-stop statusactive" uib-tooltip="Active" uib-tooltip-placement="top"></i></td>
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" ng-if="clientCardDetailsData.activation_status == 'D'" class="pointer">
+                             <i class="fa fa-stop " uib-tooltip="Inactive" tooltip-placement="right"></i></td>
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" ng-if="clientCardDetailsData.activation_status == 'N'" class="pointer">
+                        <i class="fa fa-stop statuspending" uib-tooltip="NotActivated" tooltip-placement="right"></i></td>
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" class="pointer">{{clientCardDetailsData.balance}}</td>
+                    <td data-ng-click="routeToCardDetailedInfo(clientCardDetailsData.seq_number)" class="pointer">{{proflBalance |number}}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Card Number</th>
+                    <th>Expiry date</th>
+                    <th>Status</th>
+                    <th>Card Balance</th>
+                    <th>Profile Balance</th>
+                </tr>
+                </tfoot>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>

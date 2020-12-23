@@ -1,0 +1,86 @@
+<div class="content-container" ng-controller="RuleConfigMasterController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/products">{{ "label.anchor.products" | translate }}</a></li-->
+        <li class="active">{{ "label.anchor.ruleconfig.mstr" | translate }}</li>
+    </ul>
+    <div class="card well">
+        <h3 class="bolder">
+        {{ "Limit Master" | translate }}
+            <div class="pull-right">
+                <button class="btn btn-success" ng-click = "reloadRules()" >Reload Rules</button>
+            </div>
+        </h3>
+        <hr/>
+        <h4>New Configurations</h4>
+        <div class= "row">
+            <label class="col-sm-2">Entity Consumed at</label>
+            <div class="col-sm-3">
+                <select id="entity" name="entity" ng-model="entity"
+                        ng-options="param for param in entities"
+                        value="{{param}}"  class="form-control"
+                        required>
+                    <option value="">{{'label.selectone' | translate}}</option>
+                </select>
+            </div>
+            <!-- label class="col-sm-2">Entity</label>
+            <div class="col-sm-3">
+                <select id="entityId" name="entityId" ng-model="entityId"
+                        ng-options="param.name for param in entity.values"
+                        value="{{param.key}}"  class="form-control"
+                        required>
+                    <option value="">{{'label.selectone' | translate}}</option>
+                </select>
+            </div -->
+        </div>
+        <div class= "row">
+            <label class="col-sm-2">Entity Consumed by</label>
+            <div class="col-sm-3">
+                <select id="category" name="category" ng-model="category"
+                        ng-options="param.key for param in params"
+                        value="{{param.key}}"  class="form-control"
+                        required>
+                    <option value="">{{'label.selectone' | translate}}</option>
+                </select>
+            </div>
+            <label class="col-sm-2">Entity</label>
+            <div class="col-sm-3">
+                <select id="categoryId" name="categoryId" ng-model="categoryId"
+                        ng-options="param.name for param in category.values"
+                        value="{{param.key}}"  class="form-control"
+                        required>
+                    <option value="">{{'label.selectone' | translate}}</option>
+                </select>
+            </div>
+            <button class = "btn btn-primary" ng-show = "entity && !category && !categoryId" ng-click = "loadDeafultConfig()">Default -> </button>
+            <button class = "btn btn-primary" ng-show = "entity && category && categoryId" ng-click = "loadConfig()">Next -> </button>
+        </div>
+        <br><br>
+        <hr>
+        <div class= "row">
+                <h4>Saved Configurations</h4>
+                <table class="table">
+                    <thead>
+                        <tr class="graybg">
+                            <th>Sl. No.</th>
+                            <th>Entity Consumed at</th>
+                            <th>Entity Consumed by</th>
+                            <th>Entity</th>
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="limit in allSavedRules track by $index" 
+                             class="pointer">
+                            <td ng-click="loadSavedConfig(limit.entityName, limit.category, limit.categoryId)">{{$index +1}}</td>
+                            <td ng-click="loadSavedConfig(limit.entityName, limit.category, limit.categoryId)">{{limit.entityName}}</td>
+                            <td ng-click="loadSavedConfig(limit.entityName, limit.category, limit.categoryId)">{{limit.category}}</td>
+                            <td ng-click="loadSavedConfig(limit.entityName, limit.category, limit.categoryId)">{{categoryValues[limit.category +"#"+limit.categoryId]}}</td>
+                            <td ng-click="loadSavedConfig(limit.entityName, limit.category, limit.categoryId)"><i class="fa fa-play" aria-hidden="true"></i></td>
+                            <td ng-click="deleteConfig(limit.entityName, limit.category, limit.categoryId)"><i style= "color: red"class="fa fa-times" aria-hidden="true"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>

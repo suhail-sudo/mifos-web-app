@@ -1,0 +1,94 @@
+<div class="content-container" ng-controller="profileToProfileController">
+    <ul class="breadcrumb">
+        <li><a href="#/offices?isOutlet=false" has-permission='READ_OFFICE'> Manage Profiles </a></li>
+        <li class="active">Profile To Profile Transaction</li>
+    </ul>
+    <div class="card well">
+        <form id="profileToProfile" class="form-horizontal" >
+            <fieldset>
+                <legend>Profile to Profile Transfer</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Transaction Date<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <input id="transactionDate" type="text" name="transactionDate" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
+                               is-open="opened1" min="minDate" max="restrictDate"  class="form-control" required/>
+                    </div>
+                    <div class="col-sm-2">
+                        <form-validate valattributeform="profileToProfile" valattribute="transactionDate" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="fromProfile">From Profile:<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="fromProfile" ng-model="fromProfile" class="form-control" required
+                                ng-change="checkCardsSelected()">
+                            <option value="">--Select Profile--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="profileToProfile" valattribute="fromProfile"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="toProfile">To Profile:<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <!--ng-options="offices.id as office.name for offices in offices"
+                                value="{{offices.id}}"--->
+                        <select id="toProfile" ng-model="toProfile" class="form-control" required
+                                 ng-change="checkCardsSelected()">
+                            <option value="">--Select Profile--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="profileToProfile" valattribute="toProfile"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="transactionAmount">Transaction Amount<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="transactionAmount" type="text" number-format name="transactionAmount" ng-model="formData.transactionAmount" class="form-control" required late-Validate/>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="profileToProfile" valattribute="transactionAmount"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="paymentTypeId">Payment Type<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="paymentTypeId" ng-model="paymentTypeId"
+                                ng-options="paymentType.id as paymentType.name for paymentType in paymentTypes"
+                                value="{{paymentType.id}}" class="form-control" required>
+                            <option value="">--Select Payment Type--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="profileToProfile" valattribute="paymentTypeId"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Note</label>
+                    <div class="col-sm-3">
+                        <textarea id="note" type="text" rows="2" name="note" ng-model="note" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="col-md-offset-3">
+                    <a id="cancel" type="reset" href="#/offices?isOutlet=false" has-permission='READ_OFFICE' class="btn btn-default">{{ 'label.button.cancel' | translate }}</a>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

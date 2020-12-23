@@ -1,0 +1,75 @@
+<div class="content-container" ng-controller="ViewKycCategoryController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li><a href="#/kyccategory">KYC Category</a></li>
+        <li class="active">{{kycCategory.name}}</li>
+    </ul>
+    <script type="text/ng-template" id="deleteKycCategory.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">Delete KYC Category</h3>
+        </div>
+        <div class="modal-body">
+            <api-validate></api-validate>
+            <br>
+            <button class="btn btn-default" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="delete()">{{'label.button.confirm' | translate}}</button>
+        </div>
+    </script>
+    <div class="card">
+        <div class="content">
+                <div class="">
+                    <div class="pull-right">
+                        <div class="form-group">
+                            <a href="#/editkyccategory/{{kyccategory.id}}"
+                               class="btn btn-primary" has-permission='UPDATE_KYCCATEGORY'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{ 'label.button.edit' | translate }}</a>
+                            <a data-ng-click="deleteKycCategory(kyccategory.id)" class="btn btn-danger" has-permission='DELETE_KYCCATEGORY'><i
+                                    class="fa fa-trash-o"></i>&nbsp;&nbsp;{{ 'label.button.delete' | translate }}</a>
+                        </div>
+                    </div>
+                    <h3><strong>{{kyccategory.name}}</strong></h3>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <table class="table-bordered table view-table" style="width: 350px">
+				                <tr>
+				                    <td>Name</td>
+				                    <td>{{kyccategory.name}}</td>
+				                </tr>
+				                <tr>
+				                    <td>Active</td>
+				                    <td>{{kyccategory.isActive}}</td>
+				                </tr>
+				                <tr>
+				                    <td>Max Account Balance</td>
+				                    <td>{{kyccategory.maxBalance}}</td>
+				                </tr>
+				                <tr>
+				                    <td>KYC Evidence</td>
+				                    <td><span ng-repeat="kycEvidence in kyccategory.kycEvidences">{{kycEvidence.name}}<br/></span></td>
+				                </tr>
+				                <tr>
+				                    <td>Allowed Loan Products</td>
+				                    <td><span ng-repeat="loanProduct in kyccategory.loanProducts">{{loanProduct.name}}<br/></span></td>
+				                </tr>
+				                <tr>
+				                    <td>Allowed Savings Products</td>
+				                    <td><span ng-repeat="savingsProduct in kyccategory.savingsProducts">{{savingsProduct.name}}<br/></td>
+				                </tr>
+				                <tr>
+				                    <td>Limits</td>
+				                    <td>
+										<span ng-if="kyccategory.hasLimits"> 
+				                        		<a ng-href="#/ruleconfig/Client/KYCCategory/{{kyccategory.id}}">View Limits</a> 
+				                        	</span>
+				                        	<span ng-if="!kyccategory.hasLimits"> 
+				                        		<a ng-href="#/ruleconfig/Client/KYCCategory/{{kyccategory.id}}">Link Limits</a> 
+				                        	</span>
+				                    </td>
+				                </tr>
+            				</table>
+                        </div>
+                       
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

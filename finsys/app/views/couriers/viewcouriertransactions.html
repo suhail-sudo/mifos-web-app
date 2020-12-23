@@ -1,0 +1,58 @@
+ <div class="content-container" ng-controller="ViewCourierTransactionsController">
+     <ul class="breadcrumb">
+         <li><a href="#/couriers">{{'label.anchor.managecouriers' | translate}}</a></li>
+         <li><a href="#/viewcourier/{{courierId}}">{{'label.anchor.viewcourier' | translate}}</a></li>
+         <li class="active">{{'label.anchor.viewcouriertransactions' | translate}}</li>
+     </ul>
+     <div class = "card">
+ 	    <div class="content">
+ 		    <div class="container-fluid">
+ 		       	<div class="col-md-12">
+ 		       		<div class="pull-right">
+ 		                <div class="form-group pull-right">
+ 				             <a href="#/couriers/{{courierId}}/addcouriertransactions" class="btn btn-primary" has-permission='CREATE_COURIERTRANSACTION'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{'label.button.addcouriertransaction' | translate}}</a>
+          				</div>
+ 		            </div>
+ 		            <table class="table">
+ 		                <thead>
+ 		                <tr>
+ 		                	<th>{{'label.heading.couriertxndate' | translate}}</th>
+ 		                    <th>{{'label.heading.transferfrom' | translate}}</th>
+ 		                    <th>{{'label.heading.transferto' | translate}}</th>
+ 		                    <th>{{'label.heading.txnamount' | translate}}</th>
+ 		                    <th>{{'label.heading.currency' | translate}}</th>
+ 		                    <th>{{'label.heading.courierstatus' | translate}}</th>
+ 		                    <th>{{'label.heading.isinsurancecoverprovided' | translate}}</th>
+		                </tr>
+ 		                </tr>
+ 		                </thead>
+ 		
+ 		                <tbody>
+ 		               <tr class="pointer-main" ng-repeat="history in transactionhistory.currentPageItems | orderBy:'history.transactionDate':reverse | filter:filterText">
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.transactionDate | DateFormat}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.transferFormOfficeName}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.transferToOfficeName}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.amount}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.currencyCode}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.status.value}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.isInsuranceCoverProvided}}</td>
+                 		</tr>
+ 		                </tbody>
+             		</table>
+             		<ul class="pager">
+		                <li class="previous">
+		                    <a id="prev" ng-click="transactionhistory.previous()" href="" 
+		                    ng-disabled="!transactionhistory.hasPrevious()">&larr;{{'label.button.previous' | translate}}</a>
+		                </li>
+		                <li class="next">
+		                    <a id="next" ng-click="transactionhistory.next()" href="" ng-disabled="!transactionhistory.hasNext()">{{'label.button.next' | translate}} &rarr;</a>
+		                </li>
+		            </ul>
+ 		     	</div>
+ 		    	</div>
+ 		    </div>
+ 	    </div>
+      </div>
+      <style>
+      </style>
+ </div>

@@ -1,0 +1,102 @@
+<div class="content-container" ng-controller="ViewCourierController">
+    <ul class="breadcrumb">
+        <li><a href="#/couriers">{{'label.anchor.managecouriers' | translate}}</a></li>
+        <li class="active">{{'label.anchor.viewcourier' | translate}}</li>
+    </ul>
+    <div class = "card">
+	    <div class="content">
+		    <div class="container-fluid">
+		       	<div class="col-md-12">
+		       	<api-validate></api-validate>
+		       		<div class="pull-right">
+		                <div class="form-group pull-right">
+							 <a href="#/couriers/{{courier.courierId}}/viewcouriertransactions/" class="btn btn-primary" has-permission='READ_COURIERTRANSACTION'><i class="fa fa-list"></i>&nbsp;&nbsp;{{'label.button.couriertransaction' | translate}}</a>
+				             <a href="#/editcourier/{{courier.courierId}}" class="btn btn-primary" has-permission='UPDATE_COURIER'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{'label.button.edit' | translate}}</a>
+         			 		 <a class="btn btn-danger" has-permission='DELETE_COURIER' data-ng-click="routeToDelete(courier.courierId)"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;{{'label.button.delete' | translate}}</a>
+         				</div>
+		            </div>
+		            <div class="col-md-4 control-label">
+		            	<h3>
+		            		<strong>
+		            			Courier Company Details
+		            		</strong>
+		            	</h3>
+		            </div>
+		            <table class="table table-bordered view-table">
+		                <tr>
+		                    <th width="50%">{{'label.heading.companybusinessname' | translate}}</th>
+		                    <td>{{courier.companyName}}</td>
+		                <tr>
+		                    <th>Company Registration Number</th>
+		                    <td>{{courier.companyRegNo}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.contactphone' | translate}}</th>
+		                    <td>{{courier.contactPhoneNo}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.contactemail' | translate}}</th>
+		                    <td>{{courier.contactEmail}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.couriercompanycode' | translate}}</th>
+		                    <td>{{courier.courierCompanyCode}}</td>
+		                </tr>
+		                <tr>
+		                    <th>User</th>
+		                    <td>{{courier.user.username}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.assetglmapping' | translate}}</th>
+		                    <td>{{courier.assetGLMappingId}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.linkedoffices' | translate}}</th>
+		                    <td><span ng-repeat="linkedOffice in linkedOffices">{{linkedOffice.name}}<br/></span></td>
+		                </tr>
+		            </table>
+		            <div class="col-md-4 control-label">
+		            	<h3>
+		            		<strong>
+		            			Courier Address Details
+		            		</strong>
+		            	</h3>
+		            </div>
+		            <table class="table table-bordered view-table">
+		            	<tr>
+		                    <th width="50%">{{'label.input.street' | translate}}</th>
+		                    <td>{{courier.address.street}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.addressone' | translate}}</th>
+		                    <td>{{courier.address.addressLine1}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.addresstwo' | translate}}</th>
+		                    <td>{{courier.address.addressLine2}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.input.city' | translate}}</th>
+		                    <td>{{courier.address.city}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.input.state_province' | translate}}</th>
+		                    <td>{{courier.address.stateProvinceId}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.input.country' | translate}}</th>
+		                    <td>{{courier.address.countryId}}</td>
+		                </tr>
+		                 <tr>
+		                    <th>{{'label.input.postal_code' | translate}}</th>
+		                    <td>{{courier.address.postalCode}}</td>
+		                </tr>
+		            </table>
+		     	</div>
+		    	</div>
+		    </div>
+	    </div>
+     </div>
+     <style>
+     </style>
+</div>

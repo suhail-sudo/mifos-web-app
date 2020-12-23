@@ -1,0 +1,104 @@
+<div class="content-container" ng-controller="ViewSingleCourierTransactionController">
+    <ul class="breadcrumb">
+        <li><a href="#/couriers/">{{'label.anchor.couriers' | translate}}</a></li>
+        <li><a href="#/couriers/{{courierId}}/viewcouriertransactions">{{'label.anchor.viewcouriertransactions' | translate}}</a></li>
+        <li class="active">{{ hideview ? 'label.anchor.editcouriertransaction' : 'label.anchor.viewcouriertransaction' | translate}}</li>
+    </ul>
+    <div class = "card">
+	    <div class="content">
+		    <div class="container-fluid">
+		       	<div class="col-md-12">
+		       		<div class="pull-right">
+		                <div class="form-group pull-right">
+<!-- 		                	<a class="btn btn-danger" has-permission='DELETE_COURIERTRANSACTION' data-ng-click="routeToDelete(id)"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;{{'label.button.delete' | translate}}</a>
+ -->				    	<a ng-click="hideview = !hideview" ng-hide="hideview" class="btn btn-primary" has-permission='UPDATE_COURIERTRANSACTION'><i
+                       		 class="fa fa-edit "></i>&nbsp;&nbsp;{{'label.button.changestatus' | translate}}</a>
+         				</div>
+		            </div>
+		            <div ng-hide="hideview">
+		            	<div class="col-md-4 control-label">
+			            	<h3>
+			            		<strong>
+			            			Courier Transaction Details
+			            		</strong>
+			            	</h3>
+		           		 </div>
+		            <table class="table table-bordered view-table">
+		                <tr>
+		                    <th width="50%">{{'label.heading.couriertxndate' | translate}}</th>
+		                    <td>{{transaction.transactionDate | DateFormat}}</td>
+		                <tr>
+		                    <th>{{'label.heading.transferfrom' | translate}}</th>
+		                    <td>{{transaction.transferFormOfficeName}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.transferto' | translate}}</th>
+		                    <td>{{transaction.transferToOfficeName}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.txnamount' | translate}}</th>
+		                    <td>{{transaction.amount}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.currencycode' | translate}}</th>
+		                    <td>{{transaction.currencyCode}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.courierstatus' | translate}}</th>
+		                    <td>{{transaction.status.value}}</td>
+		                </tr>
+		                <tr>
+		                    <th>{{'label.heading.isinsurancecoverprovided' | translate}}</th>
+		                    <td>{{insurance}}</td>
+		                </tr>
+		            </table>
+		            </div>
+		            
+		            <div ng-show="hideview">
+		            	<form name="editTransactionDetailsForm" novalidate="" class="form-horizontal"
+							rc-submit="submit()">
+							<api-validate></api-validate>
+							<fieldset>
+								<div class="form-group">
+									<div class="col-md-4 control-label">
+						            	<h3>
+						            		<strong>
+						            			Courier Transaction Details
+						            		</strong>
+						            	</h3>
+				           			 </div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">
+										{{'label.heading.courier.status' | translate}} : <span class="required">*</span>
+									</label>
+									<div class="col-sm-3">
+										<select chosen="statusOptions" id="status" name="status" ng-model="formData.status" class="form-control"
+					                            ng-options="status.id as status.value for status in statusOptions"
+					                            value="{{status.id}}" required late-validate><option value=""></option>
+					                    </select>
+									</div>
+									<div class="col-sm-2">
+										<span
+											ng-if="addTransactionDetailsForm.status.$empty && addTransactionDetailsForm.status.$dirty">
+											<small class="error">
+												Required
+											</small>
+										</span>
+									<form-validate valattributeform="addTransactionDetailsForm" valattribute="status" />					
+									</div>
+								</div>
+							</fieldset>
+						</form>
+						 <div class="col-md-offset-5">
+		                    <button id="cancel" type="reset" ng-click="cancel()" class="btn btn-default">{{'label.button.cancel' | translate}}
+		                    </button>
+		                    <button id="save" type="submit" ng-click="submit()" has-permission='UPDATE_COURIERTRANSACTION' class="btn btn-primary">{{'label.button.save' | translate}}
+		                    </button>
+		                </div>
+		            </div>
+		     	</div>
+		    </div>
+	    </div>
+     </div>
+</div>

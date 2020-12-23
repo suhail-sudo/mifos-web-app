@@ -1,0 +1,33 @@
+<div class="content-container" ng-controller="RuleConfigController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/products">{{ "label.anchor.products" | translate }}</a></li-->
+        <li>
+            <a href="#/ruleconfig">{{ "Limit Master" | translate }}</a>
+        </li>
+        <li class="active">{{ "Limit Configuration" | translate }}</li>
+    </ul>
+    <div class="card well">
+        <h3 class="bolder">
+        {{ "Limit Configuration" | translate }}
+            <div class="pull-right">
+                <button class="btn btn-primary" ng-click = "saveRules()" >Save</button>
+            </div>
+        </h3>
+        <hr/>
+        <div ng-repeat="error in  customError" style= "color: red" >{{error.msg}}</div>
+        <api-validate></api-validate>
+        <div class ="row" ng-repeat="rule in ruleMasterList track by $index">
+            <div class="form-group">
+                <label>{{rule.paramDesc}}
+                        <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.maximumaccountbalance' | translate}}" tooltip-append-to-body="true"></i>
+                </label>   | category : {{rule.category}}<br>
+                <div class = "col-md-6" ng-if="rule.elementType == 'text'" >
+                    <input type="text" id="rule{{$index}}" name="decimalplace" class="form-control"
+                        ng-model="rule.value" required late-validate/>
+                </div>
+            </div>
+            <br><br>
+        </div>
+        <div class="clr"></div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="content-container" data-ng-controller="OfficeTypesController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li class="active">Manage Office Types</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="#/createofficetype" class="btn btn-primary pull-right" has-permission='CREATE_OFFICETYPE'><i
+                            class="fa fa-plus "></i>Create Office Type</a>
+                </div>
+            </div>
+            <br />
+            <table class="table">
+                <thead>
+                    <tr class="graybg">
+                        <th>Name</th>
+                        <th>Allowed Payment Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer-main" ng-repeat="officeType in officeTypes | orderBy:'name' ">
+                        <td class="pointer" data-ng-click="routeTo(officeType.id)">{{officeType.name}}</td>
+                        <td class="pointer" data-ng-click="routeTo(officeType.id)">{{officeType.allowedPaymentTypes}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="content-container" ng-controller="AddVaultTransactionController">
+    <ul class="breadcrumb">
+    	<li><a href="#/vaults">{{'label.anchor.vaults' | translate}}</a></li>
+        <li><a href="#/#/viewvault/{{vaultId}}">{{'label.anchor.viewvault' | translate}}</a></li>
+        <li class="active">{{'label.anchor.addvaulttransactions' | translate}}</li>
+    </ul>
+	<div class="card-content">
+		<form name="addVaultTransactionDetailsForm" novalidate="" class="card form-horizontal well"
+			rc-submit="submit()">
+			<api-validate></api-validate>
+			<fieldset>
+				<div class="form-group">
+					<div class="control-label col-sm-3"  >
+						<h3>
+						<strong>{{ 'label.heading.send.cash' | translate }}</strong>&nbsp;
+						</h3>
+					</div>
+				</div>
+				
+				
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">{{ 'label.heading.couriertxndate' | translate }} 
+						:<span class="required">*</span></label>
+					<div class="col-sm-3">
+						<input id="transactionDate" disabled type="text" name="transactionDate"
+						datepicker-pop="dd MMMM yyyy" ng-model="formData.transactionDate"
+						is-open="opened1" min="minDate" max="restrictDate"
+						class="form-control" required/>
+					</div>
+					<div class="col-sm-2">
+							<form-validate valattributeform="addVaultTransactionDetailsForm"
+							valattribute="transactionDate" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+					{{'label.heading.transferfrom' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+	                    <select chosen="linkedOffices" id="officeIdFrom" name="officeIdFrom" ng-model="formData.transferFromId" class="form-control"
+	                            ng-options="office.id as office.name for office in linkedOffices"
+	                            value="{{office.id}}" required late-validate><option value=""></option>
+	                    </select>
+ 		            </div>
+ 		            <div class="col-sm-2">
+ 		            	<span
+							ng-show="addVaultTransactionDetailsForm.officeIdFrom.$invalid && addVaultTransactionDetailsForm.officeIdFrom.$dirty">
+							<small class="error"> </small>
+						</span>
+						<form-validate valattributeform="addVaultTransactionDetailsForm" valattribute="officeIdFrom" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">	
+					{{'label.heading.transferto' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+	                    <select chosen="linkedOffices" id="officeIdTo" name="officeIdTo" ng-model="formData.transferToId" class="form-control"
+	                            ng-options="office.id as office.name for office in linkedOffices"
+	                            value="{{office.id}}" required late-validate><option value=""></option>
+	                    </select>
+ 		            </div>
+ 		            <div class="col-sm-2">
+ 		            	<span ng-if="addVaultTransactionDetailsForm.formData.transferFromId === addVaultTransactionDetailsForm.formData.transferToId">
+ 		            		<div class="error">
+ 		            			{{errorMsg}}
+ 		            		</div>
+ 		            	</span>
+						<form-validate valattributeform="addVaultTransactionDetailsForm" valattribute="officeIdTo" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.txnamount' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<input type="text" id="amount" name="amount" ng-model="formData.amount" ng-pattern="/^\d{0,10}$/"
+							class="form-control" required late-validate/>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<!-- <span
+							ng-if="addVaultTransactionDetailsForm.amount.$empty && addVaultTransactionDetailsForm.amount.$error.pattern">
+							<small class="error">
+								Must be numeric and cannot be empty
+							</small>
+						</span> -->
+						<form-validate valattributeform="addVaultTransactionDetailsForm" valattribute="amount" />					
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.currency' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<select chosen="currencyOptions" id="currency" name="currency" ng-model="formData.currencyCode" class="form-control"
+	                            ng-options="currency.code as currency.name for currency in currencyOptions"
+	                            value="{{currency.code}}" required late-validate><option value=""></option>
+	                    </select>
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-if="addVaultTransactionDetailsForm.currency.$empty && addVaultTransactionDetailsForm.currency.$dirty">
+							<small class="error">
+								Required
+							</small>
+						</span>
+						<form-validate valattributeform="addVaultTransactionDetailsForm" valattribute="currency" />					
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">{{'label.heading.isinsurancecoverprovided'
+						| translate}} :</label>
+					<div class="col-sm-3">
+						<input id="activeCheckbox" type="checkbox"
+							ng-model="formData.isInsuranceCoverProvided">
+					</div>
+				</div>
+				
+				<div class="pull-right">
+    		            <a id="cancel" class="btn btn-default" href="#/couriers/{{courierId}}/viewcouriertransactions/">{{'label.button.cancel' | translate}}</a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_COURIERTRANSACTION'>
+    		                {{'label.button.save' | translate}}
+    		            </button>
+    		        </div>
+			</fieldset>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,58 @@
+
+<div class="content-container" ng-controller="ConsumeLimitsController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/products">{{ "label.anchor.products" | translate }}</a></li-->
+        <li class="active">{{ "label.anchor.consume.limits" | translate }}</li>
+    </ul>
+    <div class="card well">
+        <h3 class="bolder">
+        {{ "label.heading.consume.limits" | translate }} - {{ "label.heading.consume.limits."+entityName | translate}}
+        </h3>
+        <hr/>
+        <div class= "row" style= "width:100%; overflow: auto;">
+            <table class="table">
+                <thead>
+                    <tr class="graybg">
+                        <th>{{"label.heading.consume.limits.entityName" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.entityId" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.category" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.categoryId" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.previousTransactionAmount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.dailyTransactionCount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.dailyTransactionAmount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.weeklyTransactionCount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.weeklyTransactionAmount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.monthlyTransactionCount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.monthlyTransactionAmount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.quarterlyTransactionCount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.quarterlyTransactionAmount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.yearlyTransactionCount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.yearlyTransactionAmount" | translate}}</th>
+                        <th>{{"label.heading.consume.limits.lastModifiedTime" | translate}}</th>
+                    </tr>
+                <tbody>
+                    <tr ng-class="{ 'graybg': $index % 2 ==1 }" ng-repeat="limit in consumeLimits track by $index">
+                        <td>{{limit.entityName}}</td>
+                        <td>{{(limit.entityName == "Office") ? limit.office.name : limit.client.displayName }}</td>
+                        <td>{{limit.category}}</td>
+                        <td>{{limit.categoryName}}</td>
+                        <td>{{limit.previousTransactionAmount}}</td>
+                        <td>{{limit.dailyTransactionCount}}</td>
+                        <td>{{limit.dailyTransactionAmount}}</td>
+                        <td>{{limit.weeklyTransactionCount}}</td>
+                        <td>{{limit.weeklyTransactionAmount}}</td>
+                        <td>{{limit.monthlyTransactionCount}}</td>
+                        <td>{{limit.monthlyTransactionAmount}}</td>
+                        <td>{{limit.quarterlyTransactionCount}}</td>
+                        <td>{{limit.quarterlyTransactionAmount}}</td>
+                        <td>{{limit.yearlyTransactionCount}}</td>
+                        <td>{{limit.yearlyTransactionAmount}}</td>
+                        <td>{{limit.lastModifiedTime | DateFormat}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br><br><br>
+        </div>
+    </div>
+</div>  
+    

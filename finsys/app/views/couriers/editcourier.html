@@ -1,0 +1,250 @@
+<div class="content-container" ng-controller="EditCourierController">
+    <ul class="breadcrumb">
+    	<li><a href="#/couriers">{{'label.anchor.managecouriers' | translate}}</a></li>
+        <li class="active">{{'label.anchor.EditCourier' | translate}}</li>
+    </ul>
+	<div class="card-content">
+		<form name="EditCourierDetailsForm" novalidate="" class="card form-horizontal well"
+			rc-submit="submit()">
+			<api-validate></api-validate>
+			<fieldset>
+				<div class="form-group">
+					<div class="control-label col-sm-2">
+						<h3>
+							<strong>Add Courier</strong>
+						</h3>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.companybusinessname' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<input type="text" id="companyName" ng-model="formData.companyName"
+							class="form-control" />
+						</div>
+					</div>
+				</div>	
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.companyregnumber' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<input type="text" id="companyRegNo" ng-model="formData.companyRegNo"
+							class="form-control" />
+						</div>
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="mobileNo">{{'label.input.mobilenumber'
+						| translate}}<span class="required">*</span></label>
+					<div class="col-sm-3">
+						<input type="text" id="contactPhoneNo"  name="contactPhoneNo" maxlength="10" minlength="9" name="contactPhoneNo" 
+						ng-pattern="/^\d{9,10}$/" ng-model="formData.contactPhoneNo" class="form-control" required late-validate/>
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-if="EditCourierDetailsForm.contactPhoneNo.$invalid && EditCourierDetailsForm.contactPhoneNo.$dirty || EditCourierDetailsForm.contactPhoneNo.$error.minlength">
+							<small class="error required"
+							ng-if="EditCourierDetailsForm.contactPhoneNo.$error.pattern">
+								{{'label.mustbenumeric and cannot be less then 10 digits' | translate}} </small>
+						</span>
+						<form-validate valattributeform="EditCourierDetailsForm" valattribute="contactPhoneNo" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="contactEmail">{{'label.heading.contactemail'
+						| translate}}<span class="required">*</span></label>
+					<div class="col-sm-3">
+						<input type="email" id="contactEmail"  name="contactEmail"
+						ng-model="formData.contactEmail" class="form-control" required late-validate/>
+					</div>
+					<div class="col-sm-2">
+						<form-validate valattributeform="EditCourierDetailsForm" valattribute="contactEmail" />
+					</div>
+					<div class="col-sm-2 error required">
+						<span ng-show="EditCourierDetailsForm.contactEmail.$touched && EditCourierDetailsForm.contactEmail.$invalid">{{'label.email.format.incorrect' | translate}}</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.couriercompanycode' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<input type="text" id="courierCompanyCode" ng-model="formData.courierCompanyCode"
+							class="form-control" />
+						</div>
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+					User Name : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+	                    <select id="userId" ng-model="formData.userId" class="form-control"
+	                            ng-options="user.id as user.username for user in userOptions"
+	                            value="{{user.id}}" required late-validate><option value=""></option>
+	                    </select>
+ 		            </div>
+ 		            <div class="col-sm-2">
+						<form-validate valattributeform="EditCourierDetailsForm"
+							valattribute="userId" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+					{{'label.heading.assetglmapping' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+	                    <select id="assetMappingId" ng-model="formData.assetGLMappingId" class="form-control"
+	                            ng-options="assetMapping.id as assetMapping.name for assetMapping in assetGLMappingOptions"
+	                            value="{{assetMapping.id}}" required late-validate><option value=""></option>
+	                    </select>
+ 		            </div>
+ 		            <div class="col-sm-2">
+						<form-validate valattributeform="EditCourierDetailsForm"
+							valattribute="assetMappingId" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.linkedoffices' | translate}} : <span class="required">*</span>
+					</label>
+					<div
+		            	data-angular-treeview="true"
+		                data-tree-id="officestreeview"
+		               	data-tree-model="treedata"
+		                data-disabled="false"
+		                data-node-id="id"
+		                data-node-label="name"
+		                data-node-children="children">
+    		        </div>
+				</div>
+				<div>
+					<div class="form-group">
+						<div class="control-label col-sm-2"  >
+							<h3>
+							<strong>{{ 'label.input.address' | translate }} :</strong>&nbsp;
+							</h3>
+						</div>
+					</div>
+					<div>
+						<div class="form-group">
+							<div class="control-label col-sm-2">
+								<label>{{ 'label.input.street' | translate }} :<span
+									class=" required">*</span></label>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" name="street"
+									ng-model="formData.address.street" class="form-control" required
+									  late-validate />
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="EditCourierDetailsForm"
+									valattribute="street" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">
+							{{ 'label.heading.addressone' | translate }} :<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" name="addressline1"
+									ng-model="formData.address.addressLine1"
+									class="form-control" late-Validate required>
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="EditCourierDetailsForm"
+									valattribute="addressline1" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{
+								'label.heading.addresstwo' | translate }} :</label>
+							<div class="col-sm-3">
+								<input type="text" name="addressLine2"
+									ng-model="formData.address.addressLine2"
+									class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{
+								'label.input.city' | translate }} :<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" name="city"
+									ng-model="formData.address.city" late-Validate required class="form-control">
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="EditCourierDetailsForm"
+									valattribute="city" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="control-label col-sm-2">
+								<label>{{ 'label.input.state_province' | translate }} :<span class="required">*</span></label>
+							</div>
+							<div class="col-sm-3">
+								<select name="stateOptions"
+									ng-model="formData.address.stateProvinceId"
+									class="form-control"
+									ng-options="stateOption.id as stateOption.name for stateOption in stateOptions"
+									value="formData.stateProvinceId"><option value=""></option></select>
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="EditCourierDetailsForm"
+									valattribute="stateOptions" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="control-label col-sm-2">
+								<label>{{ 'label.input.country' | translate }} : <span class="required">*</span></label>
+							</div>
+							<div class="col-sm-3">
+								<select name="countryOptions"
+									ng-model="formData.address.countryId" class="form-control"
+									ng-options="countryOption.id as countryOption.name for countryOption in countryOptions"
+									value="countryOption.id"><option value=""></option></select>
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="EditCourierDetailsForm"
+									valattribute="countryOptions" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">{{
+								'label.input.postal_code' | translate }} : <span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" name="postal_code" id="postal_code"
+									ng-model="formData.address.postalCode" ng-pattern="/^[a-zA-Z0-9]*$/" class="form-control" late-Validate required>
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="EditCourierDetailsForm"
+									valattribute="postal_code" />
+							</div>
+							<div class="col-sm-2">
+								<span
+								ng-if="EditCourierDetailsForm.postal_code.$invalid && EditCourierDetailsForm.postal_code.$dirty">
+								<small class="error required"
+								ng-if="EditCourierDetailsForm.postal_code.$error.pattern">
+									{{'label.mustalphabenumeric' | translate}} : </small>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pull-right">
+   		            <a id="cancel" class="btn btn-default" href="#/viewcourier">{{'label.button.cancel' | translate}}</a>
+   		            <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_COURIER'>
+   		                {{'label.button.save' | translate}}
+   		            </button>
+    		    </div>
+			</fieldset>
+		</form>
+	</div>
+</div>

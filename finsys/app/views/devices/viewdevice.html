@@ -1,0 +1,49 @@
+<div class="content-container" ng-controller="ViewDeviceController">
+    <ul class="breadcrumb">
+        <li><a href="#/device">{{'label.anchor.managedevices' | translate}}</a></li>
+        <li class="active">{{'label.anchor.viewdevice' | translate}}</li>
+    </ul>
+    <div class = "card">
+	    <div class="content">
+		    <div class="container-fluid">
+		       	<div class="col-md-12">
+		       		<div class="pull-right">
+		                <div class="btn-group">
+		                    <a href="#/editdevice/{{device.id}}" class="btn btn-primary" has-permission='UPDATE_DEVICE'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+		                        'label.button.edit' | translate }}</a>
+		                </div>
+		            </div>
+		            <table class="table table-bordered view-table">
+		                <tr>
+		                    <td>Manufacturer Name</td>
+		                    <td>{{device.manufactrerName}}</td>
+		                <tr  class="graybg">
+		                    <td>{{'label.heading.username' | translate}}</td>
+		                    <td>{{device.appUserName}}</td>
+		                </tr>
+		                <tr>
+		                    <td>{{'label.heading.primaryimeino' | translate}}</td>
+		                    <td>{{device.imei1}}</td>
+		                </tr>
+		                <tr  class="graybg">
+		                    <td>{{'label.heading.secondaryimeino' | translate}}</td>
+		                    <td>{{device.imei2}}</td>
+		                </tr>
+		                <tr>
+		                    <td>Start Date</td>
+		                    <td>{{device.startDate | DateFormat }}</td>
+		                </tr>
+		                <tr class="graybg">
+		                    <td>End Date</td>
+		                    <td>{{device.endDate | DateFormat }}</td>
+		                </tr>
+		                <tr>
+		                    <td>Is Active</td>
+		                    <td>{{device.isActive}}</td>
+		                </tr>
+		            </table>
+		    	</div>
+		    </div>
+	    </div>
+     </div>
+</div>

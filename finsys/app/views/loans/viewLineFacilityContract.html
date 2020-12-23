@@ -1,0 +1,185 @@
+<div class="content-container" ng-controller="ViewLineFacilityContractController">
+    <div id="viewlptop"></div>
+    <ul class="breadcrumb">
+        <li><a href="#/viewclient/{{client.id}}">{{client.displayName}}</a></li>
+        <li class="active">Preview Line Contract</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <form name="review" class="form-horizontal">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" data-ng-click="approveContract(lineContract.id)"><i
+                                class="fa fa-thumbs-o-up"></i> Approve</a>
+                        <!-- <a class="btn btn-primary"><i
+                                 class="fa fa-thumbs-o-down"></i> Reject</a> -->
+                        <a class="btn btn-primary" data-ng-click="disburseContract(lineContract.id)"><i
+                                class="fa fa-arrow-right"></i> Activate</a>
+                        <a class="btn btn-primary" data-ng-click="routeToEdit(lineContract.id)"><i
+                                class="fa fa-edit"></i> Edit</a>
+                    </div>
+                </div>
+                <legend>A Preview of {{lineContract.lineFacilityProduct.code}} Facility Contract</legend>
+                <fieldset>
+                    <api-validate></api-validate>
+                    <table width="100%">
+                        <tr class="graybg bottomborder">
+                            <td colspan="7">
+                                <strong>{{'label.heading.details' | translate}}</strong>
+                            </td>
+                        </tr>
+                        <tr class="toppadding">
+                            <td colspan="6">{{'label.input.product' | translate}}</td>
+                            <td>{{lineContract.lineFacilityProduct.code}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Client:&nbsp;
+                            </td>
+                            <td>{{client.displayName}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Available date:</td>
+                            <td>{{lineContract.facilityAvailDate | DateFormat}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">{{ 'label.input.submittedon' | translate }}</td>
+                            <td>{{lineContract.submittedOnDate}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">{{ 'label.input.disbursementon' | translate }}</td>&nbsp;
+                            <td>{{lineContract.facilityAvailDate | DateFormat}} </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Product Type:</td>
+                            <td class="">{{lineContract.facilityType}}</td>
+                        </tr>
+                        <tr class="graybg bottomborder toppadding">
+                            <td colspan="7">
+                                <strong>{{'label.heading.terms' | translate}}</strong>
+                            </td>
+                        </tr>
+                        <tr class="toppadding">
+                            <td colspan="6">Approved Limit:</td>
+                            <td>{{lineContract.approvedFacilityAmount | number}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Max Daily Utilization:</td>
+                            <td>{{lineContract.maxDailyUtilization | number}}</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="6">Tenor:</td>
+                            <td>{{lineContract.facilityTenor | number}}</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="6">Moratorium Interest:</td>
+                            <td>{{lineContract.interestMoratoriumCycle |number}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">Moratorium :</td>
+                            <td>{{lineContract.principalMoratoriumCycle}}</td>
+                        </tr>
+                       <!-- <tr>
+                            <td colspan="6">Annual Interest Rate :</td>
+                            <td>{{lineContract.billingCycle.annualInterestRate}}</td>
+                        </tr> -->
+                        <tr>
+                            <td colspan="6">Limit Availability :</td>
+                            <td></td>
+                        </tr>
+                        <br>
+                        <tr class="graybg bottomborder toppadding">
+                            <td colspan="7">
+                                <strong>{{'label.heading.charges' | translate}}</strong>
+                            </td>
+                        </tr>
+                        <tr class="graybg" ng-show="charges.length > 0">
+                            <th colspan="2">{{'label.heading.name' | translate}}</th>
+                            <th>{{'label.heading.type' | translate}}</th>
+                            <th colspan="2">{{'label.heading.amount' | translate}}</th>
+                            <th>{{'label.heading.collectedon' | translate}}</th>
+                            <th>{{'label.heading.date' | translate}}</th>
+                        </tr>
+                        <tr ng-repeat="charge in charges" ng-show="charges.length>0">
+                            <td colspan="2">{{charge.name}},{{charge.currency.displaySymbol}}</td>
+                            <td>{{charge.chargeCalculationType.value}}</td>
+                            <td colspan="2">{{charge.amount}}</td>
+                            <td>{{charge.chargeTimeType.value}}</td>
+                            <td>{{charge.dueDate | DateFormat}}</td>
+                        </tr>
+                        <tr class="graybg" ng-show="loanaccountinfo.overdueCharges.length>0">
+                            <th colspan="2">{{'label.heading.name' | translate}}</th>
+                            <th>{{'label.heading.type' | translate}}</th>
+                            <th colspan="2">{{'label.heading.amount' | translate}}</th>
+                            <th colspan="2">{{'label.heading.collectedon' | translate}}</th>
+                        </tr>
+                        <tr ng-repeat="charge in loanaccountinfo.overdueCharges">
+                            <td colspan="2">{{charge.name}},{{charge.currency.displaySymbol}}</td>
+                            <td>{{charge.chargeCalculationType.value}}</td>
+                            <td colspan="2">{{charge.amount | number}}</td>
+                            <td>{{charge.chargeTimeType.value}}</td>
+                        </tr>
+
+                        <br><br>
+                        <tr class="graybg bottomborder toppadding">
+                            <td colspan="7">
+                                <strong>Current Account</strong>
+                            </td>
+                        </tr>
+                        <br>
+                        <tr class="toppadding">
+                            <td colspan="6">Account Linked:</td>
+                            <td>{{lineContract.accountNumber}}</td>
+                        </tr>
+                        <br>
+                        <tr class="toppadding">
+                            <td colspan="6">Facility Expiry date:</td>
+                            <td>{{lineContract.facilityExpiryDate |DateFormat}}</td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <tr class="graybg bottomborder toppadding">
+                        <td colspan="7">
+                            <strong>Current Account Transactions</strong>
+                        </td>
+                    </tr><br>
+                    <div class="head-affix">
+                        <table class="table">
+                            <thead>
+                            <tr class="graybg">
+                                <th>Transaction ID</th>
+                                <th>Transaction Date</th>
+                                <th>Transaction Type</th>
+                                <th>Transaction Amount</th>
+                                <th>Running Balance</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="transDetail in transDetails | orderBy:transactionSort.column:transactionSort.descending"
+                                class="pointer-main dataTables-example" id="dataTables-example" ng-hide="transDetail.reversed">
+                                <td>{{transDetail.id}}</td>
+                                <td>{{transDetail.transDate | DateFormat}}</td>
+
+                                <td>{{transDetail.transDesc}}</td>
+
+                                <td>{{transDetail.amount |number}}</td>
+                                <td>{{transDetail.runningBalance |number}}</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr class="graybg">
+                                <th>Transaction ID</th>
+                                <th>Transaction Date</th>
+                                <th>Transaction Type</th>
+                                <th>Transaction Amount</th>
+                                <th>Running Balance</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

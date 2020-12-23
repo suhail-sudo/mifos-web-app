@@ -1,0 +1,132 @@
+<div class="content-container" ng-controller="EditPaymentTypeController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a-->
+        </li>
+        <li><a href="#/viewpaymenttype">{{'label.heading.paymenttype' | translate}}</a></li>
+        <li class="active">{{'label.anchor.editpaymenttype' | translate}} </li>
+    </ul>
+    <div class="card">
+        <div class="content">
+        <form name="createpaymenttype" novalidate="" class="form-horizontal"
+            rc-submit="submit()">
+                <api-validate></api-validate>
+                <fieldset>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="name">{{'label.anchor.paymentTypes' | translate}}</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="name" name="name" ng-model="formData.name" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="label">Label</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="label" name="label" ng-model="formData.label" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >{{'label.input.description' | translate}}</label>
+
+                        <div class="col-sm-3">
+                            <textarea name="description" ng-model="formData.description"
+                                      type="text" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+    		                <label class="control-label col-sm-2">Parent<span class="required">*</span></label>
+    				
+    		                <div class="col-sm-3">
+    		                    <select chosen="paymentTypes" id="parentId" ng-model="formData.parentId" class="form-control"
+    		                            ng-options="paymentType.id as paymentType.name for paymentType in paymentTypes"
+    		                            value="{{paymentType.id}}"></select>
+    		                </div>
+    		            </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">{{'label.input.iscashpayment' | translate}}</label>
+
+                        <div class="col-sm-3">
+                            <input type="checkbox" id="iscashpayment"  ng-model="formData.isCashPayment">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="control-label col-sm-2">Is Active</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="isactive"  ng-model="formData.isActive">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Show Client</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="showClient"  ng-model="formData.showClient">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Is Category</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="iscategory"  ng-model="formData.isCategory">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Is Service Provider</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="isserviceprovider"  ng-model="formData.isServiceProvider">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Is Service</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="isservice"  ng-model="formData.isService">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Needs SRN</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="needssrn"  ng-model="formData.needsSrn">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Needs Billing Month</label>
+
+                            <div class="col-sm-3">
+                                <input type="checkbox" id="needsbillingmonth"  ng-model="formData.needsBillingMonth">
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >{{'label.input.position' | translate}}</label>
+
+                        <div class="col-sm-3">
+                            <input type="text" id="position" name="position" ng-model="formData.position" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Transaction Type</label>
+                        <div class="col-sm-3">
+                            <select  id="tranTypeId" ng-model="formData.tranTypeId" class="form-control"
+                                    ng-options="tranType.id as tranType.value for tranType in paymentTypeTranTypeOptions"
+                                    value="{{tranType.id}}">
+                            <option value="">--Select--</option>    
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Is Tran Auth Enabled</label>
+
+                        <div class="col-sm-3">
+                            <input type="checkbox" id="isTranAuthEnabled"  ng-model="formData.isTranAuthEnabled">
+                        </div>
+                    </div>
+                    <div class="col-md-offset-2 paddedleft">
+                        <a id="cancel" href="#/viewpaymenttype" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
+                        <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_PAYMENTTYPE'>{{'label.button.save' | translate}}</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

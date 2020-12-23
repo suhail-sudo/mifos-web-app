@@ -1,0 +1,90 @@
+<div class="content-container" ng-controller="RuleMakerController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/products">{{ "label.anchor.products" | translate }}</a></li-->
+        <li class="active">{{ "label.anchor.ruleconfig.mstr" | translate }}</li>
+    </ul>
+    <div class="card well"> 
+        <h3 class="bolder">
+        {{ "Rule Maker" | translate }}
+            <div class="pull-right">
+                <button class="btn btn-success" ng-click = "reloadRules()" >Reload Rules</button>
+            </div>
+        </h3>
+        <hr/>
+        <h4>New Rule</h4>
+        <div class= "row">
+            <div class="col-sm-6">
+                <div class= "row">
+                    <label class="col-sm-4">Entity Consumed at(Entity)</label>
+                    <div class="col-sm-7">
+                        <select id="entity" name="entity" ng-model="entity"
+                                ng-options="param for param in entities"
+                                value="{{param}}"  class="form-control"
+                                 ng-change="construct()">
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                    </div>
+                </div><br>
+                <div class= "row">
+                    <label class="col-sm-4">Entity Consumed by(Category)</label>
+                    <div class="col-sm-7">
+                        <select id="category" name="category" ng-model="category"
+                                ng-options="param.key for param in params"
+                                value="{{param.key}}"  class="form-control"
+                                 ng-change="construct()">
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <label class="col-sm-4">Base Entity(Category Id)</label>
+                    <div class="col-sm-7">
+                        <select id="categoryId" name="categoryId" ng-model="categoryId"
+                                ng-options="param.name for param in category.values"
+                                value="{{param.key}}"  class="form-control"
+                                 ng-change="construct()">
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                    </div>
+                </div><br>
+                <div class="row">
+                        <label class="col-sm-4">Add Operand</label>
+                        <div class="col-sm-7">
+                            <select id="operand" name="operand" ng-model="operand"
+                                    ng-options="param for param in operands"
+                                    value="{{param}}"  class="form-control"
+                                     ng-change="construct()">
+                                <option value="">{{'label.selectone' | translate}}</option>
+                            </select>
+                        </div>
+                    </div><br>
+            </div>
+            <div class="col-sm-6">
+                    <div id="constructedJson" ng-model="constructedJson" ui-codemirror="{
+                        onLoad : constructedJsonLoader,
+                        lineNumbers: true,
+                        theme:'twilight',
+                        indentUnit: 1,
+                        smartIndent:true,
+                        lineWrapping : true,
+                        mode: {name: 'javascript', json: true}
+                        }" > </div>
+            </div>
+        </div>
+        <br><hr>
+        <center><button class = "btn btn-primary"  ng-click = "addRule()"> Add </button></center>
+        <br>
+        <div class="row">
+                <div id="constructedJson" ng-model="rules" ui-codemirror="{
+                    lineNumbers: true,
+                    theme:'twilight',
+                    indentUnit: 1,
+                    smartIndent:true,
+                    lineWrapping : true,
+                    mode: {name: 'javascript', json: true}
+                    }" > </div>
+        </div>
+        <br>
+        <button class = "btn btn-primary"  ng-click = "pushRules()"> Push Rules </button>
+    </div>
+</div>

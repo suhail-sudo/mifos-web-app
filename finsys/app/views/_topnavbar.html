@@ -1,0 +1,230 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-click="isNavCollapsed = !isNavCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href id="leftnav-toggle">
+                <span class="fa fa-bars"></span>
+            </a>
+            <a class="navbar-brand" href="#/home">
+                <img src="./images/logo-flat.png" alt="FinSys">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" uib-collapse="!isNavCollapsed">
+            <ul class="nav navbar-nav" id="main-menu-left">
+                <li class="" has-permission='VIEW_CUSTOMER' uib-dropdown is-open="li.client.status.isopen"
+                    ng-mouseenter="li.client.status.isopen = true" ng-mouseleave="li.client.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('clients') }" href >
+                        <i class="fa fa-users"></i> Customer<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu id="swatch-menu">
+                        <li><a href="#/createclient" has-permission='CREATE_CLIENT'>Add Customer</a></li>
+                        <li><a href="#/clients" has-permission='READ_CLIENT'>Manage Customer</a></li>
+                        <li><a href="#/bulkimportclients" has-permission='CREATE_CLIENT'>Import Customer</a></li>
+                        <li><a href="#/groups" has-permission='READ_GROUP'>Manage Group</a></li>
+                        <li><a href="#/creategroup" has-permission='CREATE_GROUP'>Create Group</a></li>
+                        <li><a href="#/centers" has-permission='READ_CENTER'>Manage Center</a></li>
+                        <li><a href="#/createcenter" has-permission='CREATE_CENTER'>Create Center</a></li>
+                        <li><a href="#/standinginstructions/history" has-permission='READ_STANDINGINSTRUCTION '>Standing Instructions History</a></li>
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_PRODUCT' uib-dropdown is-open="li.product.status.isopen"
+                    ng-mouseenter="li.product.status.isopen = true" ng-mouseleave="li.product.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('product') }" href >
+                        <i class="fa fa-briefcase"></i> Product<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu id="swatch-menu">
+                        <li><a href="#/loanproducts" has-permission='READ_LOANPRODUCT'>Loans</a></li>
+                        <li><a href="#/savingproducts" has-permission='READ_SAVINGSPRODUCT'>Savings</a></li>
+                        <li><a href="#/fixeddepositproducts" has-permission='READ_FIXEDDEPOSITPRODUCT'>Fixed Deposit</a></li>
+                        <li><a href="#/recurringdepositproducts" has-permission='READ_RECURRINGDEPOSITPRODUCT'>Recurring Deposit</a></li>
+                        <li><a href="#/shareproducts" has-permission='READ_DIVIDEND_SHAREPRODUCT'>Share</a></li>
+                        <li><a href="#/charges" has-permission='READ_CHARGE'>Charges</a></li>
+                        <li><a href="#/productmix" has-permission='READ_PRODUCTMIX'>Product Mix</a></li>
+                        <li><a href="#/floatingrates" has-permission='READ_FLOATINGRATE'>Floating Rates</a></li>
+                        <li><a href="#/taxconfiguration" has-permission='READ_TAXGROUP'>Product Tax</a></li>
+                        <li><a href="#/lineFacilityProducts" >Line Facility</a></li>
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_SERVICES' uib-dropdown is-open="li.service.status.isopen"
+                    ng-mouseenter="li.service.status.isopen = true" ng-mouseleave="li.service.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('service') }" href >
+                        <i class="fa fa-cog"></i> Services<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu id="swatch-menu">
+                        <li><a href="#/vaults" has-permission='READ_VAULT'>Vaults</a></li>
+                        <li><a href="#/tellers" has-permission='ALLOCATECASHIER_TELLER'>Teller Operations</a></li>
+                        <li><a href="#/offices?isOutlet=false" has-permission='READ_OFFICE'>Partner Profile<!--Outlet--></a></li>
+                        <li><a href="#/agents" has-permission='READ_CLIENT'>Agent</a></li>
+                        <li><a href="#/ruleconfig" has-permission='READ_RULECONFIG'>Limit</a></li>
+                        <li><a href="#/charges" has-permission='READ_CHARGE'>Fees / Charges</a></li>
+                        <li><a href="#/couriers" has-permission='READ_COURIER'>Couriers</a></li>
+                        <li><a href="#/device" has-permission='READ_USERDEVICE'>Devices</a></li>
+                        <li><a href="#/consumelimits/Office" has-permission='READ_RULECONFIG'>{{ 'label.anchor.consume.limits' | translate }} - {{"label.heading.consume.limits.Office" |translate}}</a></li>
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_CARDS' uib-dropdown is-open="li.cards.status.isopen"
+                    ng-mouseenter="li.cards.status.isopen = true" ng-mouseleave="li.cards.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('Cards') }" href >
+                        <i class="fa fa-credit-card"></i> Cards<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu id="swatch-menu">
+                        <li><a href="#/cards" has-permission='PROVISION_CARDPROVISIONS'>Provisioning</a></li>
+                        <li><a href="#/cardOpr" has-permission='READ_CLIENT'>Operations</a></li>
+                        <li><a href="#/cardSettle" has-permission='SETTLE_CARD'>Settlement</a></li>
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_SECURITY' uib-dropdown id="security-menu" is-open="li.security.status.isopen"
+                    ng-mouseenter="li.security.status.isopen = true" ng-mouseleave="li.security.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('security') }" href>
+                        <i class="fa fa-shield"></i> Security
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="" uib-dropdown-menu>
+                        <li><a href="#/createuser" has-permission='CREATE_USER'>Add User</a></li>
+                        <li><a href="#/users" has-permission='READ_USER'>Manage User</a></li>
+                        <li><a href="#/twofactorconfig" has-permission='READ_TWOFACTOR_CONFIGURATION'>Two Factor Authentication</a></li>
+                        <li><a href="#/passwordpreferences" has-permission='READ_PASSWORD_PREFERENCES'>Password Preferences</a></li>
+                        <li><a href="#/employees" has-permission='READ_STAFF'>Manage Employee</a></li>
+                        <li><a href="#/admin/roles" has-permission='READ_ROLE'>Roles & Permission</a></li>
+                        <li><a href="#/admin/viewmctasks" has-permission='READ_AUDIT'>Authorization</a></li>
+                        <li><a href="#/audit" has-permission='READ_AUDIT'>Audit Trail</a></li>
+                        <!--li><a href="#/test" has-permission='READ_AUDIT'>Cards New Screen</a></--li -->
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_ACCOUNTING' uib-dropdown id="accounting-menu" is-open="li.accounting.status.isopen"
+                    ng-mouseenter="li.accounting.status.isopen = true" ng-mouseleave="li.accounting.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('acc') }" href>
+                        <i class="fa fa-money"></i> Accounting
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="" uib-dropdown-menu>
+                        <li><a href="#/accounting_coa" has-permission='READ_GLACCOUNT'>Chart of Accounts</a></li>
+                        <li><a href="#/viewallprovisionings" has-permission='CREATE_PROVISIONCATEGORY'>Loan Provisioning</a></li>
+                        <li><a href="#/managefunds" has-permission='READ_FUND'>Fund Sources</a></li>
+                        <li><a href="#/advsearch" has-permission='READ_FUND'>Fund Mapping</a></li>
+                        <li><a href="#/journalentry" has-permission='CREATE_JOURNALENTRY'>Journal Entries</a></li>
+                        <li><a href="#/searchtransaction" has-permission='READ_JOURNALENTRY'>Search Journal Entries</a></li>
+                        <li><a href="#/financialactivityaccountmappings" has-permission='READ_FINANCIALACTIVITYACCOUNT'>GL Mapping</a></li>
+                        <li><a href="#/openingbalances" has-permission='DEFINEOPENINGBALANCE_JOURNALENTRY'>GL Balance Migration</a></li>
+                        <li><a href="#/accounts_closure" has-permission='READ_GLCLOSURE'>End of Circle - Account Closure</a></li>
+                        <li><a href="#/add_accrule" has-permission='READ_ACCOUNTINGRULE'>Accounting Rule</a></li>
+                        <li><a href="#/freqposting" has-permission='CREATE_JOURNALENTRY'>Frequent Posting</a></li>
+                        <li><a href="#/viewprovisioningentries" has-permission='CREATE_PROVISIONENTRIES'>Provisioning Entries</a></li>
+                        <li><a href="#/run_periodic_accrual" has-permission='EXECUTE_PERIODICACCRUALACCOUNTING'>Accruals</a></li>
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_REPORTS' uib-dropdown id="reports-menu" is-open="li.reports.status.isopen"
+                    ng-mouseenter="li.reports.status.isopen = true" ng-mouseleave="li.reports.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('rep') }" href>
+                        <i class="fa fa-bar-chart-o"></i> {{
+                        'label.anchor.reports' | translate }}<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu>
+                        <li><a href="#/reports" has-permission='CREATE_REPORT'>Definition</a></li>
+                        <li><a href="#/reports/clients" has-permission='READ_REPORT'>Customers</a></li>
+                        <li><a href="#/reports/savings" has-permission='READ_REPORT'>Savings</a></li>
+                      <!--  <li><a href="#/reports/loans" has-permission='READ_REPORT'>{{ 'label.anchor.loans' |
+                            translate }}</a></li>
+
+                        <li><a href="#/reports/funds" has-permission='READ_REPORT'>{{ 'label.anchor.funds' |
+                            translate }}</a></li>
+                        <li><a href="#/reports/accounting" has-permission='READ_REPORT'>Accounting & GL</a></li>
+                        <li><a href="#/xbrl" has-permission='READ_REPORT'>Analytics</a></li> -->
+                    </ul>
+                </li>
+                <li class="" has-permission='VIEW_SYSADMIN' uib-dropdown id="preview-menu" is-open="li.admin.status.isopen"
+                    ng-mouseenter="li.admin.status.isopen = true" ng-mouseleave="li.admin.status.isopen = false">
+                    <a class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-class="{ activate: isActive('admin') }" href>
+                        <i class="fa fa-wrench"></i> SysAdmin<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu>
+                        <li><a href="#/accountnumberpreferences" has-permission='READ_ACCOUNTNUMBERFORMAT'>Account Numbering</a></li>
+                        <li><a href="#/offices?isOutlet=false" has-permission='READ_OFFICE'>Partner Profile</a></li>
+                        <li><a href="#/officetypes" has-permission='READ_OFFICE_TYPE'>Office Types</a></li>
+                        <li><a href="#/holidays" has-permission='READ_HOLIDAY'>Holiday</a></li>
+                        <li><a href="#/workingdays" has-permission='READ_WORKINGDAYS'>Workdays</a></li>
+                        <li><a href="#/entitydatatablechecks" has-permission='READ_ENTITY_DATATABLE_CHECK'>Entity Table</a></li>
+                        <li><a href="#/createdatatable" has-permission='READ_DATATABLE'>User Defined Data</a></li>
+                        <li><a href="#/viewpaymenttype" has-permission='READ_PAYMENTTYPE'>Payment Type</a></li>
+                        <li><a href="#/codes" has-permission='READ_CODE'>Code Definition</a></li>
+                        <li><a href="#/currconfig" has-permission='READ_CURRENCY'>Currency</a></li>
+                        <li><a href="#/smscampaigns" has-permission='READ_SMSCAMPAIGN'>SMS Campaign</a></li>
+                        <li><a href="#/hooks" has-permission='READ_HOOK'>System Hook</a></li>
+                        <li><a href="#/bulkimport" has-permission='READ_CLIENT'>Bulk Import</a></li>
+                        <li><a href="#/entitytoentitymapping" has-permission='CREATE_ENTITYMAPPING'>Entity Mapping</a></li>
+                        <li><a href="#/surveys" has-permission='REGISTER_SURVEY'>Customer Survey</a></li>
+                        <li><a href="#/templates" has-permission='READ_TEMPLATE'>Template</a></li>
+                        <li><a href="#/externalservices" has-permission='UPDATE_EXTERNALSERVICES'>External Services</a></li>
+                        <li><a href="#/global" has-permission='READ_CONFIGURATION'>Global Configuration</a></li>
+                        <li><a href="#/adhocquery" has-permission='CREATE_ADHOC'>Adhoc Query Setup</a></li>
+                        <li><a href="#/jobs" has-permission='READ_SCHEDULER'>Batch Job Operations</a></li>
+                        <li><a href="#/bulkloan" has-permission='BULKREASSIGN_LOAN'>Bulk Loan Reassignment</a></li>
+                        <li><a href="#/kyccategory" has-permission='READ_KYCCATEGORY'>Client Category</a></li>
+                        <li><a href="#/rulemaker"  has-permission='READ_SPELRULES' >Limit Rule Maker</a></li>
+                        <li><a href="#" has-permission=''>Card Settings</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" id="main-menu-right">
+                <!-- <li class="" uib-dropdown id="notification-icon" ng-controller="NotificationsController" is-open="li.notif.status.isopen"
+                ng-mouseenter="li.notif.status.isopen = true" ng-mouseleave="li.notif.status.isopen = false">
+                    <a href class="" uib-dropdown-toggle data-toggle="uib-dropdown"
+                       ng-click="fetchItemsInNotificationTray()">
+                        <span class="fa fa-bell"></span>
+                    </a>
+                    <div class="numberCircle" ng-hide="numberOfUnreadNotifications == 0">{{ numberOfUnreadNotifications }}</div>
+                    <ul class="notification-container" uib-dropdown-menu>
+                        <ul class="notification-list" ng-repeat="notification in notifications">
+                            <li ng-click="navigateToAction(notification)">
+                                <h4>{{ notification.content }}</h4>
+                                <span>{{ notification.createdAt }}</span>
+                            </li>
+                        </ul>
+                        <li class="notification-list-link">
+                            <a href="#/notifications">Show all notifications</a>
+                        </li>
+                    </ul>
+                </li> -->
+                <li class="" uib-dropdown id="user-menu" is-open="li.user.status.isopen"
+                    ng-mouseenter="li.user.status.isopen = true" ng-mouseleave="li.user.status.isopen = false">
+                    <a id="user-dropdown" class="" uib-dropdown-toggle data-toggle="uib-dropdown" href>
+                        {{currentSession.user.name}}<b class="caret"></b></a>
+                    <ul class="" uib-dropdown-menu>
+                        <li><a id="help" ng-click="helpf()"><i class="fa fa-question-circle"></i> {{
+                            'label.anchor.help' | translate }}</a></li>
+                        <li><a href="#/profile"><i class="fa fa-user"></i> {{ 'label.anchor.profile' | translate
+                            }}</a></li>
+                        <li><a href="#/usersetting"><i class="fa fa-cog"></i> {{ 'label.anchor.settings' | translate
+                            }}</a></li>
+                        <li><a id="logout" data-ng-click="logout()"><i class="fa fa-power-off"></i> {{
+                            'label.anchor.logout' | translate }}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <form ng-submit="search()" class="navbar-form navbar-right">
+                <div class="input-group pull-left" >
+                    <input id="search" type="text" class="form-control input-sm unstyled" style="width:200px;" data-ng-model="search.query"
+                           placeholder="{{'label.searchorpress'|translate}}">
+                    <div class="input-group-btn search-panel" uib-dropdown="">
+                        <button type="button" class="btn btn-default btn-sm " uib-dropdown-toggle data-toggle="uib-dropdown">
+                            {{currentScope.name | translate}} &nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="" uib-dropdown-menu>
+                            <li  uib-dropdown ng-repeat=" searchScope in searchScopes" ng-click="changeScope(searchScope)">
+                                <a href="">{{ searchScope.name |translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>

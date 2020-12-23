@@ -1,0 +1,221 @@
+<div class="content-container" ng-controller="ViewCardDetailedInfoController">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <div>
+        <ul class="breadcrumb">
+            <li><a id="getBack">Client Accounts Details</a>
+            <li>Card Detailed Info</li>
+        </ul>
+    </div>
+    <div class="card"><br>
+        <div><h2>
+            <strong style="margin-left: 10px;margin-right: 40px;" ng-if="getCardDetail.card_status=='A'">
+                <i class="fa fa-stop statusactive" uib-tooltip="Active" uib-tooltip-placement="top">
+                </i>  {{getCardDetail.card_display_name}}
+            </strong>
+            <strong style="margin-left: 10px;margin-right: 40px;" ng-if="getCardDetail.card_status=='D'">
+                <i class="fa fa-stop " uib-tooltip="Inactive" tooltip-placement="top"></i>  {{getCardDetail.card_display_name}}
+            </strong>
+        </h2>
+            <hr>
+        </div>
+        <div class="col-md-12 col-sm-12 btn-group row" style="margin-left:-1px;margin-right: 1px;">
+            <!--strong style="margin-left: 10px;margin-right: 40px;">{{'label.heading.latestCardBalance' | translate}}: {{savingaccountdetails.currency.code}} {{getCardDetail.card_current_balance}}</strong -->
+            <button type="button" id="postCharge" name="cardOpr" class="btn btn-primary ng-binding" data-ng-click="postChargesToCard()">
+                Post Charge
+            </button>
+
+            <button type="button" id="deduct" name="cardOpr" class="btn btn-primary ng-binding" data-ng-click="deductFunds()">
+                Deduct from Card
+            </button>
+            <button type="button" id="loadCard" name="cardOpr" class="btn btn-primary" data-ng-click="loadFunds()">
+                Load to Card
+            </button>
+
+            <button type="button" id="transfer" name="cardOpr" class="btn btn-primary" data-ng-click="tranferFunds()">
+                Card to Card Transfer
+            </button>
+
+            <button type="button" id="cancelStopCard" name="cardOprStop" class="btn btn-primary hide" data-ng-click="cancelStopCardFunc()">
+                Cancel Stop Card
+            </button>
+            <button type="button" id="replaceCard" name="replaceCard" class="btn btn-primary" data-ng-click="replaceCardFunc()">
+                Replace Card
+            </button>
+
+        </div>
+        <br>
+        <div ng-hide="report">
+            <div class="row" style="margin-left:-1px;margin-right: 1px;">
+                <div class="col-sm-7 col-md-7">
+                    <table class="table table-bordered view-table" >
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Card No
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.card_no}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Card Status
+                            </th>
+                            <td ng-if="getCardDetail.card_status=='A'"><span class="padded-td">Active</span>
+                            </td>
+                            <td ng-if="getCardDetail.card_status=='D'"><span class="padded-td">Inactive</span>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table-bold-acc fontnormal">Activation Date
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.card_activation_date}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal"> Card Display Name
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.card_display_name}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Card Sequence Number
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.card_seq_no}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Customer ID
+                            </th>
+                            <td><span class="padded-td">
+                                    {{getCardDetail.cust_id}}</span>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table-bold-acc fontnormal">Account Number
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.account_no}}</span>
+                            </td>
+                        </tr>
+
+                        <tr >
+                            <th class="table-bold-acc fontnormal">Partner Name
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.agent_name}}</span>
+                            </td>
+                        </tr>
+
+                        <tr >
+                            <th class="table-bold-acc fontnormal">Month to date Credit</th>
+                            <td><span
+                                    class="padded-td">{{getCardDetail.mtd_credit}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Month to date Debit
+                            </td>
+                            <td><span class="padded-td">{{getCardDetail.mtd_debit}}</span>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table-bold-acc fontnormal">Year to date Credit
+                            </th>
+                            <td><span
+                                    class="padded-td">{{getCardDetail.ytd_credit}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Charges Accrued
+                            </th>
+                            <td><span
+                                    class="padded-td">{{getCardDetail.charges_accrued}}</span>
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="table-bold-acc fontnormal">Last Transaction Date
+                            </th>
+                            <td><span
+                                    class="padded-td">{{getCardDetail.dat_last_txn }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="table-bold-acc fontnormal">Last Balance Synchronization Time
+                            </th>
+                            <td><span class="padded-td">{{getCardDetail.dat_last_syn}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-5 col-md-5">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>{{'label.heading.latestCardBalance' | translate}}</th>
+                            <td>{{savingaccountdetails.currency.code}} {{cardBalance}}</td> <!---{{getCardDetail.card_current_balance}}-->
+                        </tr>
+                        <tr>
+                            <th>Agent</th>
+                            <td>{{getCardDetail.agent_name}}</td>
+                        </tr>
+                        <tr>
+                            <th>Contact Phone</th>
+                            <td><span>{{getCardDetail.phone_no}}</span></td>
+                        </tr>
+                    </table>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <uib-tabset class="scrollable" tabset-name="clientTabset">
+            <uib-tab heading="Transaction Summary">
+                <div class="head-affix">
+                    <table class="table">
+                        <thead>
+                        <tr class="graybg">
+                            <th>ID</th>
+                            <th>Transaction Date</th>
+                            <th>Transaction Type</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <!--<th>Balance</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="transDetail in transDetails | orderBy:transactionSort.column:transactionSort.descending"
+                            class="pointer-main dataTables-example" id="dataTables-example" ng-hide="transDetail.reversed">
+
+
+                            <td>{{transDetail.id}}</td>
+                            <td>{{transDetail.transactionDate | DateFormat}}</td>
+
+
+                            <td>{{transDetail.transactionDescription}}</td>
+
+
+                            <td ng-if="transDetail.transactionType==2">{{savingaccountdetails.currency.code}} {{transDetail.transactionAmount/100}}</td>
+                            <td ng-if="transDetail.transactionType==1"></td>
+
+                            <td ng-if="transDetail.transactionType==2"></td>
+                            <td ng-if="transDetail.transactionType==1">{{savingaccountdetails.currency.code}} {{transDetail.transactionAmount/100}}</td>
+
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr class="graybg">
+                            <th>ID</th>
+                            <th>Transaction Date</th>
+                            <th>Transaction Type</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <!--<th>Balance</th>-->
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <!--dir-pagination-controls boundary-links="true"  pagination-id="transDetails"
+                                             template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                             on-page-change="getResultsPage(newPageNumber)"></dir-pagination-controls-->
+                </div>
+            </uib-tab>
+            <!--uib-tab heading="Charges">
+                <div class="head-affix">
+
+                </div>
+            </uib-tab -->
+        </uib-tabset>
+    </div>
+</div>

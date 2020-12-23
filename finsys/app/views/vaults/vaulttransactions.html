@@ -1,0 +1,59 @@
+ <div class="content-container" ng-controller="VaultTransactionsController">
+     <ul class="breadcrumb">
+         <li><a href="#/vaults">{{'label.anchor.vaults' | translate}}</a></li>
+         <li><a href="#/viewvault/{{vaultId}}">{{'label.anchor.viewvault' | translate}}</a></li>
+         <li class="active">{{'label.anchor.viewvaulttransactions' | translate}}</li>
+     </ul>
+     <div class = "card">
+ 	    <div class="content">
+ 		    <div class="container-fluid">
+ 		       	<div class="col-md-12">
+ 		       		<div class="pull-right">
+ 		                <div class="form-group pull-right">
+ 				             <a href="#/vaults/{{vaultId}}/sendcash" class="btn btn-primary" has-permission='CREATE_VAULTTRANSACTION'>
+ 				             <i class="fa fa-edit "></i>&nbsp;&nbsp;{{'label.button.sendcash' | translate}}</a>
+							 <a href="#/vaults/{{vaultId}}/requestcash" class="btn btn-primary" has-permission='CREATE_VAULTTRANSACTION'>
+							 <i class="fa fa-edit "></i>&nbsp;&nbsp;{{'label.button.requestcash' | translate}}</a>	
+          				</div>
+ 		            </div>
+ 		            <table class="table">
+ 		                <thead>
+ 		                <tr>
+ 		                	<th>{{'label.heading.transactiondate' | translate}}</th>
+ 		                    <th>{{'label.heading.txnamount' | translate}}</th>
+ 		                    <th>{{'label.heading.currency' | translate}}</th>
+ 		                    <th>{{'label.heading.from.office' | translate}}</th>
+ 		                    <th>{{'label.heading.to.office' | translate}}</th>
+ 		                    <th>{{'label.heading.vaultstatus' | translate}}</th>
+		                </tr>
+ 		                </tr>
+ 		                </thead>
+ 		
+ 		                <tbody>
+ 		               <tr class="pointer-main" ng-repeat="history in transactionhistory.currentPageItems | orderBy:'history.transactionDate':reverse | filter:filterText">
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.transactionDate | DateFormat}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.amount}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.currencyCode}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.transferFromOfficeName}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.transferToOfficeName}}</td>
+ 		                    <td class="pointer" data-ng-click="routeTo(history.id)">{{history.status.value}}</td>
+                 		</tr>
+ 		                </tbody>
+             		</table>
+             		<ul class="pager">
+		                <li class="previous">
+		                    <a id="prev" ng-click="transactionhistory.previous()" href="" 
+		                    ng-disabled="!transactionhistory.hasPrevious()">&larr;{{'label.button.previous' | translate}}</a>
+		                </li>
+		                <li class="next">
+		                    <a id="next" ng-click="transactionhistory.next()" href="" ng-disabled="!transactionhistory.hasNext()">{{'label.button.next' | translate}} &rarr;</a>
+		                </li>
+		            </ul>
+ 		     	</div>
+ 		    	</div>
+ 		    </div>
+ 	    </div>
+      </div>
+      <style>
+      </style>
+ </div>

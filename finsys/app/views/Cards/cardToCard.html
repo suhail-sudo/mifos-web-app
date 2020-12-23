@@ -1,0 +1,155 @@
+<div class="content-container" ng-controller="cardToCardController">
+    <ul class="breadcrumb">
+        <li><a id="getBack">Card Detailed Info</a></li>
+        <li class="active">Card To Card Transfer</li>
+    </ul>
+    <div class="card well">
+        <form id="cardToCard" class="form-horizontal" >
+            <fieldset>
+                <legend>Card to card Transfer</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Transaction Date<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <input id="transactionDate" type="text" name="transactionDate" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
+                               is-open="opened1" min="minDate" max="restrictDate"  class="form-control" required/>
+                    </div>
+                    <div class="col-sm-2">
+                        <form-validate valattributeform="cardToCard" valattribute="transactionDate" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="searchText">Send to client<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="searchText" data-ng-model="searchText" name="searchText" type="text"
+                               placeholder="{{'label.input.searchByNameAccNo' | translate}}" class="form-control" required>
+                        <form-validate valattributeform="cardToCard" valattribute="searchText"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="toClientId">Client<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <select id="toClientId" ng-model="formData.toClientId" name="toClientId" class="form-control" required>
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                        <form-validate valattributeform="cardToCard" valattribute="toClientId"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="toOfficeId">{{ 'label.input.office' | translate }}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <select id="toOfficeId" ng-model="formData.toOfficeId" name="office" class="form-control" required>
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                        <form-validate valattributeform="cardToCard" valattribute="office"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="toAccountId">{{ 'label.input.account' | translate }}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <select id="toAccountId" ng-model="formData.toAccountTypes" name="toAccountId" class="form-control"
+                                ng-options="toAccount.id as toAccount.value for toAccount in toAccountTypes"
+                                ng-change="changeEvent()" value="{{toAccount.id}}" required>
+                            <!--<option value="">{{'label.selectone' | translate}}</option> -->
+                            <option value="2" selected>Savings Account</option>
+                        </select>
+                        <form-validate valattributeform="cardToCard" valattribute="toAccountId"/>
+                    </div>
+                </div>
+
+               <!-- <div class="form-group">
+                    <label class="control-label col-sm-2" for="fromCard">From Card:<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="fromCard" ng-model="formData.fromCard" class="form-control" required
+                                ng-options="clientCards.seq_number as clientCards.card_number for clientCards in clientCards"
+                                value="{{clientCards.seq_number}}" ng-change="checkCardsSelected()">
+                            <option value="">--Select card--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="cardToCard" valattribute="fromCard"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="toCard">To Card:<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="toCard" ng-model="formData.toCard" class="form-control" required
+                        ng-options="clientCards.seq_number as clientCards.card_number for clientCards in clientCards"
+                        value="{{clientCards.seq_number}}" ng-change="checkCardsSelected()">
+                            <option value="">--Select card--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="cardToCard" valattribute="toCard"/>
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="toSeq">To card<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="toSeq" name="toSeq" class="form-control" required>
+                            <option value="">Select card</option>
+                        </select>
+                        <form-validate valattributeform="cardToCard" valattribute="toSeq"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="transferAmount">Transfer Amount<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="transferAmount" type="text" number-format name="transferAmount" ng-model="formData.transferAmount" class="form-control" required late-Validate/>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="cardToCard" valattribute="transferAmount"/>
+                    </div>
+                </div>
+
+               <!-- <div class="form-group">
+                    <label class="control-label col-sm-2" for="paymentTypeId">{{ 'label.anchor.paymentTypes' | translate }}<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <select id="paymentTypeId" ng-model="formData.paymentTypeId" name="paymentTypeId" class="form-control"
+                                ng-options="pt.id as pt.hierarchyString for pt in paymentTypes"
+                                value="{{pt.id}}"
+                                required>
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                        <form-validate valattributeform="cardToCard" valattribute="paymentTypeId"/>
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Note<span
+                            class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <textarea id="transferDescription" type="text" rows="2" name="transferDescription" ng-model="formData.transferDescription" class="form-control" required late-Validate></textarea>
+                    </div>
+                </div>
+
+                <br/>
+                <div class="col-md-offset-3">
+                    <button id="cancel" type="reset" data-ng-click="cancelTransfare()" class="btn btn-default">{{ 'label.button.cancel' | translate }}</button>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

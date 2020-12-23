@@ -1,0 +1,61 @@
+<div class="content-container">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li><a href="#/vaults">{{'label.anchor.vaults' | translate}}</a></li>
+        <li class="active">{{'label.anchor.editVault' | translate}}</li>
+    </ul>
+    <div class="card">
+    	<div class="content">
+    		<form name="editvaultform" novalidate="" class="form-horizontal" ng-controller="EditVaultController" rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		        <legend>{{'label.heading.vault.createVault' | translate}}</legend>
+
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2">{{ 'label.heading.cashmgmt.officeName' | translate }}<span class="required">*</span></label>
+
+    		                <div class="col-sm-3">
+    		                	{{officeName}}
+    		                </div>
+    		            </div>
+    		            
+    		            <div class="form-group" style="dispaly:none">
+    		            	<span ng-model="formData.officeId"></span>
+    		            </div>
+
+    		            <div class="form-group">
+    		                <label class="control-label col-sm-2">{{ 'label.heading.assetglmapping' | translate }}<span class="required">*</span></label>
+
+    		                <div class="col-sm-3">
+								<select chosen="assetGLMappingOptions" id="assetMappingId" name="assetMappingId" ng-model="formData.assetGLMappingId" class="form-control"
+	                        	    ng-options="assetMapping.id as assetMapping.name for assetMapping in assetGLMappingOptions"
+	                          		  value="{{assetGLMapping.id}}">
+	                   			 </select>
+    		                </div>
+    		                <div class="col-sm-2">
+								<form-validate valattributeform="editvaultform" valattribute="assetMappingId" />
+							</div>
+    		            </div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="maxCashLimit">Maximum Cash Limit<span class="required">*</span></label>
+							<div class="col-sm-3">
+								<input type="text" id="maxCashLimit"  name="maxCashLimit" name="maxCashLimit" 
+								ng-pattern="/^\d{0,10}$/" ng-model="formData.maximumCashLimit" class="form-control" />
+							</div>
+							<div class="col-sm-2">
+								<form-validate valattributeform="editvaultform" valattribute="maxCashLimit" />
+							</div>
+						</div>	
+
+
+    		        <div class="col-md-offset-3">
+    		            <a id="cancel" href="#/vaults">
+    		                <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    		            </a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_VAULT'>{{'label.button.save' | translate}}</button>
+    		        </div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="content-container" ng-controller="EditDeviceController">
+    <ul class="breadcrumb">
+    	<li><a href="#/device">{{'label.anchor.managedevices' | translate}}</a></li>
+        <li class="active">{{'label.anchor.devices' | translate}}</li>
+    </ul>
+	<div class="card-content card well">
+		<form name="editDeviceDetailsForm" novalidate="" class="form-horizontal"
+			rc-submit="submit()">
+			<api-validate></api-validate>
+			<fieldset>
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+					{{'label.input.device.userName' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+	                    <select chosen="users" id="userId" ng-model="formData.appuserId" class="form-control"
+	                            ng-options="user.id as user.username for user in users"
+	                            value="{{appuser.id}}" required> 
+	                            <option value="">--Select User--</option>
+	                    </select>
+ 		            </div>
+				</div>		
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.input.device.manufacturer' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<select id="manufacturerId" ng-model="formData.manufacturerId"
+							class="form-control"
+							ng-options="manufacturer.id as manufacturer.name for manufacturer in manufaturerOptionData"
+							value="{{manufactrer.id}}" required>
+							<option value="">--{{'Manufacturer Name' | translate}}--</option>
+						</select>
+						</div>
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.input.device.modelName' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<select id="modelId" ng-model="formData.modelId"
+							class="form-control"
+							ng-options="deviceModel.id as deviceModel.name for deviceModel in modelOptionData"
+							value="{{deviceModel.id}}" required>
+							<option value="">--Model Name--</option>
+						</select>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="imeiNo">{{'label.heading.primaryimeino'
+						| translate}}<span class="required">*</span></label>
+					<div class="col-sm-3">
+						<input type="text" id="imei1"  name="imei1" ng-maxlength="15"
+							ng-model="formData.primaryImei" class="form-control" ng-pattern="/^[0-9]{15}$/" 	
+							required />
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-show="editDeviceDetailsForm.imei1.$invalid && editDeviceDetailsForm.imei1.$dirty">
+							<small class="error"
+							ng-show="editDeviceDetailsForm.imei1.$error.pattern">
+								{{'IMEI should be 15 digit number	' | translate}} </small>
+						</span>
+						<form-validate valattributeform="editDeviceDetailsForm" valattribute="imeiNo" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="secondaryImeiNo">Secondary IMEI Number<span ng-if="editDeviceDetailsForm.secondaryImeiNo.$touched" class="required">*</span></label>
+					<div class="col-sm-3">
+						<input type="text" id="secondaryImeiNo"  name="secondaryImeiNo" ng-maxlength="15"
+							ng-model="formData.secondaryImei" class="form-control" ng-pattern="/^[0-9]{15}$/" ng-required="editDeviceDetailsForm.secondaryImeiNo.$touched"	
+							 />
+					</div>
+					<div class="col-sm-2">
+						<span ng-if="editDeviceDetailsForm.secondaryImeiNo.$touched">
+							<small class="error">
+							{{'label.iftouched.secondaryimei.isrequired' | translate}} 
+							</small>
+						</span>
+						<form-validate valattributeform="editDeviceDetailsForm" valattribute="secondaryImeiNo" />
+					</div>
+				</div>
+				
+				<div class="form-group" has-permission="ACTIVATE_DEVICE">
+					<label class="control-label col-sm-2">{{'label.input.active'
+						| translate}}</label>
+					<div class="col-sm-3">
+						<input id="activeCheckbox" type="checkbox"
+							ng-model="formData.isActive">
+					</div>
+				</div>
+				
+				<div class="form-group">
+    				<label class="control-label col-sm-2">Start Date<span class="required">*</span></label>
+    				<div class="col-sm-3">
+    					<input id="startDate" name="startDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.startDate"
+    						   class="form-control" is-open="opened" min="minDate" max="restrictDate" required />
+    				</div>
+					<div class="col-sm-2">
+						<form-validate valattributeform="editDeviceDetailsForm" valattribute="startDate"/>
+					</div>
+    			</div>
+
+    			<div class="form-group">
+    				<label class="control-label col-sm-2"> End Date<span class="required">*</span></label>
+    				<div class="col-sm-3">
+    					<input id="endDate" name="endDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.endDate"
+    						   class="form-control" is-open="opened" min="minDate" required />
+    				</div>
+					<div class="col-sm-2">
+						<form-validate valattributeform="editDeviceDetailsForm" valattribute="endDate"/>
+					</div>
+    			</div>
+				
+				
+				<div class="pull-right">
+    		            <a id="cancel" class="btn btn-default" href="#/viewdevice/{{deviceId}}">{{'label.button.cancel' | translate}}</a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_OTHERUSERDEVICE'>
+    		                {{'label.button.save' | translate}}
+    		            </button>
+    		        </div>
+			</fieldset>
+		</form>
+	</div>
+</div>

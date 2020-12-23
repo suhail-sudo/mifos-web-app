@@ -1,0 +1,67 @@
+<div class="content-container" ng-controller="withdrawFunds">
+    <ul class="breadcrumb">
+        <li><a id="getBack">Card Detailed Info</a></li>
+        <li class="active">Load to client account</a></li>
+    </ul>
+    <div class="card well">
+        <form id="withdrawFunds" class="form-horizontal" >
+            <fieldset>
+                <legend>Load to Card</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Transaction Date<span class="required">*</span></label>
+                    <div class="col-sm-3">
+                        <input id="transactionDate" type="text" name="transactionDate" datepicker-pop="dd MMMM yyyy" ng-model="first.transactionDate"
+                               is-open="opened1" min="'2000-01-01'" min="minDate" max="restrictDate"  class="form-control" required/>
+                    </div>
+                    <div class="col-sm-2">
+                        <form-validate valattributeform="withdrawFunds" valattribute="transactionDate" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="transactionAmount">Transaction Amount<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="transactionAmount" type="text" number-format name="transactionAmount" ng-model="formData.transactionAmount" class="form-control" required late-Validate/>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="withdrawFunds" valattribute="transactionAmount"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="paymentTypeId">Payment Type<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <!--<select id="payType" name="payType" ng-model="formData.payType"  class="form-control"
+                                ng-options=""
+                                value="{{payType.id}}" required>
+                            <option value="">--Select Payment Type--</option>
+                        </select> -->
+                        <select id="paymentTypeId" ng-model="formData.paymentTypeId"
+                                ng-options="paymentType.id as paymentType.name for paymentType in paymentTypes"
+                                value="{{paymentType.id}}" class="form-control" required>
+                            <option value="">--Select Payment Type--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <form-validate valattributeform="withdrawFunds" valattribute="paymentTypeId"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Note</label>
+                    <div class="col-sm-3">
+                        <textarea id="note" type="text" rows="2" name="note" ng-model="formData.note" class="form-control"></textarea>
+                    </div>
+                </div>
+                <br/>
+                <div class="col-md-offset-3">
+                    <button id="cancel" type="reset" data-ng-click="cancelTransaction()" class="btn btn-default">{{ 'label.button.cancel' | translate }}</button>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

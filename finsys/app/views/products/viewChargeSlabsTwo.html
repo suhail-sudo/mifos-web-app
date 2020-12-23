@@ -1,0 +1,226 @@
+<div class="content-container" ng-controller="ViewChargeSlabsControllerTwo">
+    <ul class="breadcrumb">
+        <!--li><a href="#/products">{{ "label.anchor.products" | translate }}</a></li-->
+        <li>
+            <a href="#/charges">{{ "label.anchor.charges" | translate }}</a>
+        </li>
+        <li><a href="#/viewcharge/{{chargeId}}">{{ "label.anchor.viewcharge" | translate  }}</a></li>
+
+        <li class="active">{{ "label.heading.charge.slabs" | translate }}</li>
+    </ul>
+    <div class="card well">
+        <h3 class="bolder">
+            {{ "label.heading.charge.slabs" | translate  }}
+        </h3>
+        <hr />
+        <api-validate></api-validate>
+        <div class="form-group" data-ng-hide="chargeSlabs.length > 0 || newChargeSlabs.length > 0">
+            <label class="control-label col-sm-2">{{ 'label.input.charge.slab.based.on' | translate }}<span class="required">*</span></label>
+            <div class="col-sm-3">
+                <select id="based-on" name="based-on" ng-model="basedOn"
+                        ng-options="option.id as option.code | translate for option in basedOnOptions"
+                        value="{{option.id}}" class="form-control"
+                        required></select>
+            </div>
+        </div>
+        <div class="form-group" data-ng-show="chargeSlabs.length > 0 || newChargeSlabs.length > 0">
+            <label class="control-label col-sm-2">{{ 'label.input.charge.slab.based.on' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-question-circle " uib-tooltip="{{'label.tooltip.charge.slab.based.on' | translate}}"></i></label>
+            <label class="control-label col-sm-3">{{ 'label.input.charge.slab.based.on.' + basedOn | translate }}</label>
+        </div>
+        <table class="table">
+            <thead>
+            <tr class="graybg">
+                <th>{{'label.heading.from' | translate}} {{'label.input.charge.slab.based.on.' + basedOn | translate}}</th>
+                <th>{{'label.heading.to' | translate}} {{'label.input.charge.slab.based.on.' + basedOn | translate}}</th>
+                <th>{{'label.heading.consume.limits' | translate}}</th>
+                <th>{{ 'label.heading.flat.or.Percentage' | translate}}</th>
+                <th>{{ "label.heading.amount" | translate}}</th>
+                <th>Fixed Amount</th>
+                <th>Capped Amount</th>
+                <th>
+                    <div class="form-group pull-right">
+                        <a  ng-if = "basedOn"
+                            ng-click = "addNewChargeSlabs()"
+                            class="btn btn-primary"
+                            has-permission="CREATE_CHARGESLAB"
+                        ><i class="fa fa-plus "></i>&nbsp;&nbsp;{{'label.button.add' | translate}}</a>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-class="{ 'graybg': $index % 2 ==1 }" ng-repeat="slab in chargeSlabs track by $index">
+                <form  name="updatechargeslabform" novalidate=""  rc-submit="submitForUpdate()">
+                    <!-- for view-->
+                    <td ng-if="!slab.isEdit">{{slab.from  | number}}</td>
+                    <td ng-if="!slab.isEdit">{{slab.to| number}}</td>
+                    <td ng-if="!slab.isEdit"><i ng-class="{ 'fa fa-check': slab.consumeLimits, 'fa fa-times' : !slab.consumeLimits }"></i></i></td>
+                    <td ng-if="!slab.isEdit">{{(slab.flat ? "label.heading.flat" :"label.heading.percentage")| translate}}</td>
+                    <td ng-if="!slab.isEdit">{{(slab.flat ? slab.flat : slab.percentage)  | number}}</td>
+                    <td ng-if="!slab.isEdit">{{slab.fixedAmount  | number}}</td>
+                    <td ng-if="!slab.isEdit">{{slab.cappedAmount | number}}</td>
+                    <td ng-if="!slab.isEdit">
+                        <div class="form-group pull-right">
+                            <a
+                                    ng-click="editChargeSlab(slab)"
+                                    class="btn btn-primary"
+                                    has-permission="UPDATE_CHARGESLAB"
+                            ><i class="fa fa-pencil"></i>&nbsp;</a>
+                            <a
+                                    ng-click="deleteChargeSlab(slab.id)"
+                                    class="btn btn-danger"
+                                    has-permission="DELETE_CHARGESLAB"
+                            ><i class="fa fa-trash-o"></i>&nbsp;</a>
+                        </div>
+                    </td>
+                    <!-- for Edit-->
+
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <input id="from-val" name="from-val" type="text" ng-model="slabForEdit.from" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="from-val"/>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <input id="to-val" name="to-val" type="text" ng-model="slabForEdit.to" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="to-val"/>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <input id="consume-limits" name="consume-limits" type="checkbox" ng-model="slabForEdit.consumelimits" disabled>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <select id="charge-type" name="charge-type" ng-model="slabForEdit.chargeType"
+                                    ng-options="chargeType.id as chargeType.code | translate for chargeType in chargeTypeOptions"
+                                    value="{{chargeType.id}}" class="form-control"
+                                    required>
+                                <option value="">{{'label.selectone' | translate}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="charge-type"/>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <input id="amount" name="amount" type="text" ng-model="slabForEdit.amount" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="amount"/>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <input id="fixedAmount" name="fixedAmount" type="text" ng-model="slabForEdit.fixedAmount" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="fixedAmount"/>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div>
+                            <input id="cappedAmount" name="cappedAmount" type="text" ng-model="slabForEdit.cappedAmount" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="cappedAmount"/>
+                        </div>
+                    </td>
+                    <td ng-if="slab.isEdit">
+                        <div class="form-group pull-right" >
+                            <button id="cancel" class="btn btn-warning" ng-click="cancelEdit(slab)">
+                                <i class="fa fa-times"></i>&nbsp;
+                            </button>
+                            <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_CHARGESLAB'
+                                    ng-click="submitForUpdate()">
+                                <i class="fa fa-floppy-o"></i>&nbsp;
+                            </button>
+                        </div>
+                    </td>
+                </form>
+            </tr>
+            <tr ng-if="isCreate" ng-class="{ 'graybg': $index % 2 ==1 }" ng-repeat="formData in  newChargeSlabs track by $index">
+                <form name="createchargeslabform" novalidate=""  rc-submit="submitForCreate()">
+                    <td>
+                        <div>
+                            <input id="from-val" name="from-val" type="text" ng-model="formData.from" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="from-val"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="to-val" name="to-val" type="text" ng-model="formData.to" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="to-val"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="consume-limits" name="consume-limits" type="checkbox" ng-model="formData.consumelimits" disabled>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="charge-type" name="charge-type" ng-model="formData.chargeType"
+                                    ng-options="chargeType.id as chargeType.code | translate for chargeType in chargeTypeOptions"
+                                    value="{{chargeType.id}}" class="form-control"
+                                    required>
+                                <option value="">{{'label.selectone' | translate}}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="charge-type"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="amount" name="amount" type="text" value="0" ng-model="formData.amount" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="amount"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="fixedAmount" name="fixedAmount"  value="0" type="text" ng-model="formData.fixedAmount" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="fixedAmount"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="cappedAmount" name="cappedAmount" value="0" type="text" ng-model="formData.cappedAmount" class="form-control" number-format required late-Validate number=true />
+                        </div>
+                        <div>
+                            <form-validate valattributeform="createchargeslabform" valattribute="cappedAmount"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group pull-right" >
+                            <button id="cancel" class="btn btn-warning"  ng-click="removeThisSlab($index)">
+                                <i class="fa fa-times"></i>&nbsp;
+                            </button>
+                            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CHARGESLAB'
+                                    ng-if="$index == (newChargeSlabs.length -1)" ng-click="submitForCreate()">
+                                <i class="fa fa-floppy-o"></i>&nbsp;
+                            </button>
+                        </div>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

@@ -1,0 +1,53 @@
+<div class="content-container" ng-controller="mapProfileToGLController">
+    <ul class="breadcrumb">
+        <li><a href="#/offices?isOutlet=false" has-permission='READ_OFFICE'> Manage Profiles </a></li>
+        <li class="active">Map Profiles to GL Account</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4>Map Profile to GL Account</h4>
+            </div>
+            <br/>
+            <form name="mapProfileToGL" id="mapProfileToGL" novalidate="" class="form-horizontal">
+                <api-validate></api-validate>
+                <fieldset>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="officeId">Profile<span
+                                class="required">*</span></label>
+                        <div class="col-sm-3">
+                            <select id="officeId" name="officeId" class="form-control" ng-model="profileData.officeId" required>
+                                <option value="">--Select Profile--</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <form-validate valattributeform="mapProfileToGL" valattribute="officeId"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="glAccountId">GL Account <span
+                                class="required">*</span></label>
+
+                        <div class="col-sm-3">
+                            <select id="glAccountId" name="glAccountId" ng-model="profileData.glAccountId" class="form-control" required>
+                                <option value="">---Select GL Acoount---</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <form-validate valattributeform="mapProfileToGL" valattribute="glAccountId"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-offset-3">
+                        <a id="cancel" type="reset" href="#/offices?isOutlet=false"
+                           has-permission='READ_OFFICE' class="btn btn-default">{{ 'label.button.cancel' | translate }}
+                        </a>
+                        <button id="mapProfileBtn" type="submit" class="btn btn-primary">{{'label.button.save' | translate}}</button>
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+</div>

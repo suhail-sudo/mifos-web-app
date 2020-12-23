@@ -1,0 +1,61 @@
+<div class="content-container" ng-controller="ViewOfficeTypeController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li><a href="#/officetypes">Office Types</a></li>
+        <li class="active">{{officeType.name}}</li>
+    </ul>
+    <script type="text/ng-template" id="deleteOfficeType.html">
+        <div class="modal-header silver">
+            <h3 class="bolder">Delete Office Type</h3>
+        </div>
+        <div class="modal-body">
+            <api-validate></api-validate>
+            <br>
+            <button class="btn btn-default" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+            <button class="btn btn-primary" ng-click="activate()">{{'label.button.confirm' | translate}}</button>
+        </div>
+    </script>
+    <div class="card">
+        <div class="content">
+                <div class="">
+                    <div class="pull-right">
+                        <div class="form-group">
+                            <a href="#/editofficetype/{{officeType.id}}"
+                               class="btn btn-primary" has-permission='UPDATE_OFFICETYPE'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{ 'label.button.edit' | translate }}</a>
+                            <a data-ng-click="deleteOfficeType()" class="btn btn-danger" has-permission='DELETE_OFFICETYPE'><i
+                                    class="fa fa-trash-o"></i>&nbsp;&nbsp;{{ 'label.button.delete' | translate }}</a>
+                        </div>
+                    </div>
+                    <h3 class="bolder">{{officeType.name}}</h3>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>{{ 'label.heading.name' | translate }}</td>
+                                    <td>{{officeType.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Allowed Payment Types</td>
+                                    <td>{{officeType.allowedPaymentTypes}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                       
+                    </div>
+                     <div class="form-group">
+    		            <label class="control-label col-sm-2"> Allowed Payment Types </label>
+
+    		            <div
+    		                    data-angular-treeview="true"
+    		                    data-tree-id="paymenttypetreeview"
+    		                    data-tree-model="treedata"
+    		                    data-disabled="true"
+    		                    data-node-id="id"
+    		                    data-node-label="name"
+    		                    data-node-children="children">
+    		            </div>
+    		        </div>
+                </div>
+        </div>
+    </div>
+</div>

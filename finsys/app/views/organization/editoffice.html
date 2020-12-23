@@ -1,0 +1,121 @@
+<div class="content-container" ng-controller="EditOfficeController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li><a href="#/offices?isOutlet={{isOutlet}}">{{isOutlet ? 'label.anchor.manageoutlets' : 'label.anchor.manageoffices' | translate}}</a></li>
+        <li class="active">{{isOutlet ? 'label.anchor.editoutlet' : 'editoffice' | translate}}</li>
+    </ul> 
+    <div class="card">
+    	<div class="content">
+    		<form name="editofficeform" novalidate="" class="form-horizontal" rc-submit="submit()">
+    		    <api-validate></api-validate>
+    		    <fieldset>
+    		        <legend>{{isOutlet? 'Edit Outlet' : 'Edit Office'}}</legend>
+    				    <div class="form-group">
+    				        <label class="control-label col-sm-2" for="name">{{isOutlet ? 'label.input.agent.outlet' : 'label.input.office' | translate }}<span
+    				                class="required">*</span></label>
+    		
+    				        <div class="col-sm-3">
+    				            <input id="name" ng-autofocus="true" type="text" name="name" ng-model="formData.name"
+    				                   class="form-control" required/>
+    				        </div>
+    				        <div class="col-sm-3">
+    				            <form-validate valattributeform="editofficeform" valattribute="name"/>
+    				        </div>
+    				    </div>
+    				    <div class="form-group" data-ng-hide="parentId==id">
+    				        <label class="control-label col-sm-2">{{ 'label.input.parentoffice' | translate }}<span class="required">*</span></label>
+    		
+    				        <div class="col-sm-3">
+    				            <select chosen="offices" id="parentId" ng-model="formData.parentId"
+    				                    ng-options="office.id as office.name for office in offices"
+    				                    value="{{office.id}}" class="form-control"></select>
+    				        </div>
+    				    </div>
+    				    <div class="form-group">
+    				        <label class="control-label col-sm-2">{{isOutlet ? 'Outlet Type' : 'Office Type'}}<span class="required">*</span></label>
+    		
+    				        <div class="col-sm-3">
+    				            <select chosen="officeTypes" id="officeType" ng-model="formData.officeTypeId"
+    				                    ng-options="officeType.id as officeType.name for officeType in officeTypes"
+    				                    value="{{officeType.id}}" class="form-control"></select>
+    				        </div>
+    				    </div>
+    				    <div class="form-group">
+    				        <label class="control-label col-sm-2">{{ 'label.input.openedon' | translate }}<span
+    				                class="required">*</span></label>
+    		
+    				        <div class="col-sm-3">
+    				            <input id="openingDate" sort type="text" datepicker-pop="dd MMMM yyyy" ng-model="first.date"
+    				                   is-open="opened" min="minDate" max="restrictDate" class="form-control"/>
+    				        </div>
+    				    </div>
+    				    <div class="form-group">
+    				        <label class="control-label col-sm-2">{{isOutlet ? 'label.heading.outletcode' : 'label.heading.partnercode' | translate}}</label>
+    		
+    				        <div class="col-sm-3">
+    				            <input id="externalId" type="text" name="externalId" ng-model="formData.externalId" class="form-control"/>
+    				        </div>
+    				    </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Nearest Branch<span class="required">*</span></label>
+            
+                            <div class="col-sm-3">
+                                <select chosen="offices" id="nearestBranchId" 
+                                ng-model="formData.nearestBranchId" class="form-control" ng-options="office.id as office.name for office in nearestBranches" value="{{office.id}}"></select>
+                            </div>
+                        </div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="profile_no">External ID<span class="required">*</span></label>
+						<div class="col-sm-3">
+							<input type="number" id="profile_no" name="profile_no" maxlength="10" minlength="9" ng-model="formData.profile_no"
+								   class="form-control" required late-Validate ng-pattern="/^\d{9,10}$/" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="editofficeform" valattribute="profileNo"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="compCCNumber">Company CC Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="text" id="compCCNumber" name="compCCNumber" maxlength="10" minlength="4" ng-model="formData.compCCNumber"
+								   class="form-control"  ng-pattern="/^\d{9,10}$/"  />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="editofficeform" valattribute="compCCNumber"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="vatNo">VAT Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="text" id="vatNo" name="vatNo" ng-model="formData.vatNo"
+								   class="form-control"  ng-pattern="/^\d{9,10}$/" maxlength="10" minlength="4" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="editofficeform" valattribute="vatNo"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="contactNo">Contact Number<span class="required"></span></label>
+						<div class="col-sm-3">
+							<input type="tel" id="contactNo" name="contactNo" ng-model="formData.contactNo"
+								   class="form-control"  ng-pattern="/^\+\d{9,12}$/" maxlength="12" minlength="9" placeholder="+27712345678" />
+						</div>
+						<div class="col-sm-2">
+							<form-validate valattributeform="editofficeform" valattribute="contactNo"/>
+						</div>
+					</div>
+
+    				    <div class="col-md-offset-3">
+    				        <a id="cancel" href="#/offices?isOutlet={{isOutlet}}">
+    				            <button type="reset" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+    				        </a>
+    				        <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_OFFICE'>{{'label.button.save' | translate}}</button>
+    				    </div>
+    		    </fieldset>
+    		</form>
+    	</div>
+    </div>
+</div>

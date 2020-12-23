@@ -1,0 +1,40 @@
+<div class="content-container" ng-controller="ViewVaultController">
+	<ul class="breadcrumb">
+	    <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+	    <li><a href="#/vaults">{{'label.anchor.vaults' | translate}}</a></li>
+	    <li class="active">View Vault</li>
+	</ul>
+	<div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4>{{teller.name}}</h4>
+                <div class="pull-right">
+                    <div class="btn-group">
+                   		 <a href="#/vaults/{{vault.id}}/vaulttransactions/" style="margin-right:5px;" class="btn btn-primary" has-permission='READ_VAULTTRANSACTION'>
+                   		 <i class="fa fa-list"></i>&nbsp;&nbsp;{{'label.button.vaulttransaction' | translate}}</a>
+                    	 <a href="#/vaulttellers?officeId={{loggedInUserOfficeId}}" style="margin-right:5px;" class="btn btn-primary" has-permission='READ_TELLERS'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+                            'label.button.viewteller' | translate }}</a>
+                         <a href="#/editvault/{{vault.id}}" class="btn btn-primary" has-permission='UPDATE_VAULT'><i class="fa fa-edit "></i>&nbsp;&nbsp;{{
+                            'label.button.edit' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+                    <table class="table-bordered table view-table" style="width: 350px">
+                        <tr>
+                            <td>{{ 'label.heading.cashmgmt.officeName' | translate }}</td>
+                            <td>{{vault.officeName}}</td>
+                        </tr>
+                            <tr>
+                            <td>{{ 'label.heading.assetglmapping' | translate }}</td>
+                            <td>{{vault.assetGlName}}</td>
+                        </tr>
+                            <tr>
+                            <td>{{ 'label.heading.maxcashlimit' | translate }}</td>
+                            <td>{{vault.maximumCashLimit}}</td>
+                        </tr>
+                       
+                    </table>
+        </div>
+    </div>
+</div>

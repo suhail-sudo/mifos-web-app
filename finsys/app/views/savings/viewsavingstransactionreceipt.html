@@ -1,0 +1,126 @@
+<div class="content-container" ng-controller="ViewSavingsTransactionReceiptController">
+
+    <style type="text/css">
+        .style-0 {
+            empty-cells: show; 
+            table-layout: fixed; 
+            width: 256pt
+        }
+
+        .style-1 {
+            color: black; 
+            font-size: 18pt; 
+            font-family: serif; 
+            font-weight: bold; 
+            font-style: normal; 
+            text-decoration: none; 
+            text-align: center; 
+            word-spacing: 0pt; 
+            letter-spacing: 0pt; 
+            white-space: pre-wrap
+        }
+
+        .style-2 {
+            color: black; 
+            font-size: 12pt; 
+            font-family: serif; 
+            font-weight: normal; 
+            font-style: normal; 
+            text-decoration: none; 
+            text-align: left; 
+            word-spacing: 0pt; 
+            letter-spacing: 0pt; 
+            white-space: pre-wrap
+        }
+
+        .style-3 {
+            color: black; 
+            font-size: 10pt; 
+            font-family: serif; 
+            font-weight: normal; 
+            font-style: normal; 
+            text-decoration: none; 
+            text-align: left; 
+            word-spacing: 0pt; 
+            letter-spacing: 0pt; 
+            white-space: pre-wrap
+        }
+
+        .style-4 {
+            border-top: 1pt solid black
+        }
+
+        .style-5 {
+            color: black; 
+            font-size: 10pt; 
+            font-family: serif; 
+            font-weight: normal; 
+            font-style: normal; 
+            text-decoration: none; 
+            text-align: center; 
+            word-spacing: 0pt; 
+            letter-spacing: 0pt; 
+            white-space: pre-wrap
+        }
+    </style>
+    <div>
+        <ul class="breadcrumb">
+            
+            <li><a href="#viewsavingaccount/{{savingsId}}">View Savings Account</a>
+            <li class="active">Transaction Receipt</li>
+        </ul>
+    </div>
+    <div class="card" style = " padding: 2% 20%;">
+        <br>
+        <table cellspacing="0" cellpadding="0" class="style-0">
+                <colgroup><col style="width: 71pt">
+                <col style="width: 56pt">
+                <col style="width: 129pt">
+                </colgroup><tbody><tr style="height: 53pt">
+                  <td>
+                  </td><td colspan="2" valign="top" class="style-1" style="text-align:left">Receipt</td>
+                </tr>
+                <tr style="height: 21pt">
+                  <td colspan="2" valign="top" class="style-2">Date:</td>
+                  <td valign="top" class="style-3">{{txnReceipt.txnDate}}</td>
+                </tr>
+                <tr style="height: 21pt">
+                  <td colspan="2" valign="top" class="style-2">Outlet Code:</td>
+                  <td valign="top" class="style-3">{{txnReceipt.outletCode}}</td>
+                </tr>
+                <tr style="height: 32pt">
+                  <td colspan="2" valign="top" class="style-2">Reference No:</td>
+                  <td valign="top" class="style-3">{{txnReceipt.txnRefNo}}</td>
+                </tr>
+                <tr style="height: 21pt">
+                  <td class="style-4">
+                  </td><td class="style-4">
+                  </td><td class="style-4">
+                </td></tr>
+                <tr style="height: 44pt">
+                  <td colspan="3" valign="top" class="style-5">{{txnReceipt.purpose}}</td>
+                </tr>
+                <tr style="height: 22pt">
+                  <td colspan="2" valign="top" class="style-2">Account No:</td>
+                  <td valign="top" class="style-3">{{txnReceipt.account_no}}</td>
+                </tr>
+                <tr style="height: 22pt">
+                  <td colspan="2" valign="top" class="style-2">Trans Amount:</td>
+                  <td valign="top" class="style-3">{{txnReceipt.amount}}</td>
+                </tr>
+                <tr style="height: 20pt">
+                  <td colspan="2" valign="top" class="style-2">Time:</td>
+                  <td valign="top" class="style-3">{{txnReceipt.txnTime}}</td>
+                </tr>
+                <tr style="height: 22pt">
+                  <td colspan="2" valign="top" class="style-2">Agent Id:</td>
+                  <td>{{txnReceipt.agentId}}
+                </td></tr>
+                <tr style="height: 20pt">
+                  <td colspan="2" valign="top" class="style-2">Paid To:</td>
+                  <td>{{txnReceipt.paidTo}}
+                </td></tr>
+              </tbody>
+          </table>
+    </div>
+</div>

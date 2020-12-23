@@ -1,0 +1,250 @@
+<div class="content-container" ng-controller="CardController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.card' | translate}}</li>
+        <li><a href="#/cards">Card Provisioning</a></li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <h4>{{'label.cards.provisioning' | translate}}</h4>
+            </div>
+            <br>
+            <div class="">
+                <form class="form-horizontal" id="CardProvisioningForm" name="CardProvisioningForm">
+                <fieldset>
+                    <!--api-validate></api-validate-->
+                    <uib-tabset tabset-name="taskTabset" id="cardProvisioningTabs">
+                        <uib-tab heading="{{'label.new.cards.upload' | translate}}" id="uploadCardsTab" has-permission='UPLOAD_CARDPROVISIONS'>
+                            <div class="head-affix">
+                                <br>
+                                <div class="col-sm-5">
+                                    <input type="file" id="file" accept=".csv" class="form-control btn btn-default" name="file" ng-model="formData.file"
+                                           ngf-select="onFileSelect($files)">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button style="margin-left:10px;" type="button" class="form-control btn btn-primary col-sm-2 ng-binding" ng-click="upload()">
+                                        Upload
+                                    </button>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="{{'label.new.cards.approval' | translate}}" id="approveCardsTab" data-ng-click="getCardsBatch()" has-permission='APPROVE_CARDPROVISIONS'>
+                            <div class="head-affix">
+                                <table class="table condensed-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Batch No</th>
+                                        <th>Partner</th>
+                                        <th>User</th>
+                                        <th>No of cards</th>
+                                        <th>Date Uploaded</th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="pointer-main ng-scope" ng-repeat="Cards in unApprovedCards">
+                                        <td>{{Cards.batch_no}}</td>
+                                        <td>{{Cards.branch_no}}</td>
+                                        <td>{{Cards.authenticated_user}}</td>
+                                        <td>{{Cards.total_Cards}}</td>
+                                        <td>{{Cards.upload_date}}</td>
+                                        <td>
+                                            <input type="checkbox"
+                                                   ng-model="approveTemplate[Cards.id]" data-ng-click="addToApproveReject(approveTemplate)"/>
+                                            <!--input type="checkbox" ng-model="formData.approveChk" id="formData.selectBatch"/>name="formData.selectBatch"
+                                                   data-ng-model="formData.selectBatch" data-ng-click="addToApproveReject(this)" has-permission='APPROVE_CARDS' /-->
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Batch No</th>
+                                        <th>Branch No</th>
+                                        <th>User</th>
+                                        <th>No of cards</th>
+                                        <th>Date Uploaded</th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <button type="button" class="btn btn-primary ng-binding center"
+                                        data-ng-click="approveBash()" has-permission='APPROVE_CARDPROVISIONS' style="margin-left: 500px;">
+                                    <!--i class="fa fa-check"></i-->&nbsp;&nbsp;Approve</button>
+                                <!--button type="button" class="btn btn-danger ng-binding center"
+                                        data-ng-click="rejectBash()" has-permission='REJECT_CARDS'>
+                                    <i class="fa fa-times"></i>&nbsp;&nbsp;Reject Bash</button -->
+                                <div id="dialogError" title="Cards Approval" style="display:none">
+                                    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0; display:none"></span>
+                                        Please select file batches to approve</p>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="{{'label.new.cards.assigning' | translate}}" id="assignCardsTab" has-permission='ASSIGN_CARDPROVISIONS'>
+                            <div class="head-affix">
+                                <form id="searchRanges" class="form-horizontal">
+                                </br>
+                                    <div class="form-group">
+                                      <div class="col-md-12">
+                                         <div class="col-md-4">
+                                                <input ng-autofocus="true"  type="text" ng-model="sequences.start" id="startSeqNum" name="startSeqNum"
+                                                       class="form-control unstyled"
+                                                       placeholder="Start Sequence Number">
+                                            </div>
+                                          <div class="col-md-4">
+                                                <input type="text"  ng-model="sequences.end" id="endSeqNum" name="endSeqNum"
+                                                       placeholder="End Sequence Number"
+                                                       class="form-control unstyled"/>
+                                            </div>
+                                            <div class="col-md-2 pull-right">
+                                                <button class="btn btn-primary form-control" data-ng-click="searchCards()">
+                                                    <span class="fa fa-search"> Search Cards</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <table class="table condensed-table hide" id="cardsTable">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox" disabled="disabled" checked id="selectAll" data-ng-click="checkAll()"/></th>
+                                        <th>Sequence Number</th>
+                                        <th>Card Number</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="pointer-main ng-scope" ng-repeat="appCards in approvedBatches">
+                                        <td>
+                                            <input type="checkbox" disabled="disabled" class="cardsItemsChk" id="{{appCards.seq_number}}" data-ng-click="getValueItem(this)" name="cardDetails">
+                                        </td>
+                                        <td>{{appCards.seq_number}}</td>
+                                        <td>{{appCards.card_number}}</td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>Sequence Number</th>
+                                        <th>Card Number</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="form-group hide" id="assignTo">
+                            <div class="col-md-12">
+                                <div class="col-md-4"><strong>Assign to Profile  </strong></div>
+                                <div class="col-md-4">
+                                    <select chosen="agents" id="agentId" ng-model="agents.agentId"
+                                            ng-options="agent.id as agent.name for agent in agents" value="{{agent.id}}" class="form-control" required="required">
+                                        <option class="center" value="">----------Select Profile----------</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 pull-right">
+                                    <button data-ng-click="assignCardsToProfile()" class="btn btn-primary form-control">
+                                        <span class="fa fa-search"> Assign To Profile</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </uib-tab>
+                        <uib-tab heading="{{'label.dispatch.cards' | translate}}" id="dispatchCardsTab"  has-permission='DISPATCH_CARDPROVISIONS' data-ng-click="getAssignedCards()">
+                            <div class="head-affix">
+                                <table class="table condensed-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Batch</th>
+                                        <th>Recipient Name</th>
+                                        <th>Phone number</th>
+                                        <th>Email</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="pointer-main ng-scope">
+                                        <td> <!--ng-options="toDispatch.id for toDispatch in assigned"-->
+                                            <select id="batchNo" ng-model="formData.batchNo"   class="form-control" data-ng-click="dispatchNumber(formData.batchNo)" >
+                                                <option value="">--Select Batch to dispatch--</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" id="firstname" name="firstname" ng-model="formData.firstname"  class="form-control" />
+                                                   <!--ng-pattern="/(^[A-z])[A-z.'-]*/" late-Validate/--></td>
+                                        <td><input type="number" id="mobileNo" maxlength="10" minlength="9" class="form-control" name="mobileNo" ng-model="formData.mobileNo" />
+                                                  <!-- ng-pattern="/^\d{9,10}$/"  late-validate/   data-ng-click="dispatchCards(this)" --></td>
+                                        <td><input type="email" id="email" name="email" class="form-control" ng-model="formData.email" /></td>
+                                        <td><button type="button" class="btn btn-primary ng-binding center" id="dispatchBtn" data-ng-click="dispatchCards()"
+                                                   has-permission='DISPATCH_CARDPROVISIONS'>
+                                            &nbsp;&nbsp;Dispatch</button></td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Batch</th>
+                                        <th>Recipient Name</th>
+                                        <th>Phone number</th>
+                                        <th>Email</th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="De-link Card" id="delinkcard" data-ng-click="getOffices()">
+                            <div class="head-affix">
+                                <form id="delinkCardFrm" class="form-horizontal">
+                                <fieldset class="text-center">
+                                    <legend>De-Link card from Profile</legend>
+                                        </br>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">De-link Date<span class="required">*</span></label>
+                                                <div class="col-sm-3">
+                                                    <input id="delinkDate" type="text" name="delinkDate" datepicker-pop="dd MMMM yyyy" ng-model="first.delinkDate"
+                                                           is-open="opened1" min="'2000-01-01'" min="minDate" max="restrictDate" disabled  class="form-control" required/>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <form-validate valattributeform="delinkCardFrm" valattribute="delinkDate" />
+                                                </div>
+                                            </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">Profile<span class="required">*</span></label>
+                                            <div class="col-sm-3">
+                                                <!---- ng-options="office.id as office.name for office in office" value="{{office.id}}"---->
+                                                <select id="profileNo" name="profileNo" ng-model="delinkData.profileNo" class="form-control" required="required">
+                                                    <option class="center" value="" selected>-----Select Profile-----</option>
+                                                </select>
+                                                <div class="col-sm-2">
+                                                    <form-validate valattributeform="delinkCardFrm" valattribute="profileNo" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">Card Sequence Number<span class="required">*</span></label>
+                                                <div class="col-sm-3">
+                                                    <input id="seqNo" type="text" name="seqNo" ng-model="delinkData.seqNo" class="form-control" required late-Validate/>
+                                                </div>
+                                            <div class="col-sm-2">
+                                                <form-validate valattributeform="delinkCardFrm" valattribute="seqNo" />
+                                            </div>
+                                        </div>
+
+                                    <br/>
+                                    <div class="col-md-offset-3">
+                                        <button id="cancel" type="reset" data-ng-click="cancelDelink()" class="btn btn-default">{{ 'label.button.cancel' | translate }}</button>
+                                        <button id="delinkBtn" type="submit" class="btn btn-primary">Delink</button>
+                                    </div>
+                                </fieldset>
+                                </form>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,19 @@
+<div class="content-container"  ng-controller="CashTallyController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li><a href="#/tellers">{{'label.anchor.tellers' | translate}}</a></li>
+		<li><a href="#/tellers/{{tellersId}}/cashiers">{{cashierTxnTemplate.tellerName}}</a></li>
+        <li ng-show="ifAllocate()"class="active">{{'label.anchor.cashier.allocatefunds' | translate}}</li>
+		<li ng-show="ifSettle()"class="active">{{'label.anchor.cashier.settlefunds' | translate}}</li>
+    </ul>
+	<div class="card">
+		<div class="content">
+
+            <div class="row" ng-repeat="cashTally in cashTallyEntries | orderBy : -denomination">
+                <label>{{cashTally.denomination}}</label>
+
+            </div>
+        </div>
+    </div>
+</div>
+            

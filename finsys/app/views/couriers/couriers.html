@@ -1,0 +1,52 @@
+<div class="content-container" ng-controller="CourierController">
+    <ul class="breadcrumb">
+        <li class="active">{{'label.anchor.couriers' | translate}}</li>
+    </ul>
+    <api-validate></api-validate>
+
+    <div class="card">
+    	<div class="toolbar">
+            <h4>List of Couriers</h4>
+            <div class="col-sm-4 pull-right" style="padding-top:5px;">
+        		<a href="#/addcourier" class="btn btn-primary pull-right" has-permission='CREATE_COURIER'>
+        		<i class="fa fa-plus"></i> {{'label.button.addcourier' | translate}}</a> &nbsp;&nbsp;
+        	</div>
+    	</div>
+    	<div class="content">
+            <br>
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                	<th>{{'label.heading.companybusinessname' | translate}}</th>
+                    <th>Company Reg Number</th>
+                    <th>{{'label.heading.couriercompanycode' | translate}}</th>
+                    <th>{{'label.heading.contactphone' | translate}}</th>
+                    <th>{{'label.heading.contactemail' | translate}}</th>
+                    <th>Courier Admin</th>
+                    
+                </tr>
+                </thead>
+
+                <tbody>
+                        <tr class="pointer-main" dir-paginate="courier in couriers | itemsPerPage: couriersPerPage"
+                        total-items="totalCouriers"  pagination-id="couriers">
+                    <td class="pointer" data-ng-click="routeTo(courier.courierId)">{{courier.companyName}}</td>
+                    <td class="pointer" data-ng-click="routeTo(courier.courierId)">{{courier.companyRegNo}}</td>
+                    <td class="pointer" data-ng-click="routeTo(courier.courierId)">{{courier.courierCompanyCode}}</td>
+                    <td class="pointer" data-ng-click="routeTo(courier.courierId)">{{courier.contactPhoneNo}}</td>
+                    <td class="pointer" data-ng-click="routeTo(courier.courierId)">{{courier.contactEmail}}</td>
+                    <td class="pointer" data-ng-click="routeTo(courier.courierId)">{{courier.user.username}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls align="center" boundary-links="true"
+            template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+            on-page-change="getResultsPage(newPageNumber)" pagination-id="couriers">
+            </dir-pagination-controls>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,99 @@
+<div class="content-container" ng-controller="ViewChargeExemptionController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/products">{{ "label.anchor.products" | translate }}</a></li-->
+        <li>
+        <a href="#/charges">{{ "label.anchor.charges" | translate }}</a>
+        </li>
+        <li><a href="#/viewcharge/{{chargeId}}">{{ "label.anchor.viewcharge" | translate  }}</a></li>
+        
+        <li class="active">{{ "label.heading.charge.exemption" | translate }}</li>
+    </ul>
+    <div class="card well">
+        <h3 class="bolder">
+        {{ "label.heading.charge.exemption" | translate  }}
+            <div class="form-group pull-right">
+                <button ng-if= "viewMode && !isEditMode" ng-click = "edit()" class="btn btn-primary" has-permission='UPDATE_CHARGEEXEMPTION'><i class="fa fa-pencil"></i>&nbsp;&nbsp;{{'label.button.edit' | translate}}</button>
+            </div>
+        </h3>
+        <hr />
+    </div>
+    <form name="createchargeexemptionform" novalidate="" class="card form-horizontal well" rc-submit="submit()">
+        <api-validate></api-validate>
+        <fieldset>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="numFreeTxnsTotal">{{'label.input.charge.exem.total' | translate}}</label>
+                <div class="col-sm-3">
+                    <input ng-disabled = "viewMode" id="numFreeTxnsTotal" name="numFreeTxnsTotal" type="number" ng-model="formData.numFreeTxnsTotal" class="form-control"  min="0" />
+                </div>   
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createchargeexemptionform" valattribute="numFreeTxnsTotal"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="numFreeTxnsDaily">{{'label.input.charge.exem.daily' | translate}}</label>
+                <div class="col-sm-3">
+                    <input ng-disabled = "viewMode" id="numFreeTxnsDaily" name="numFreeTxnsDaily" type="number" ng-model="formData.numFreeTxnsDaily" class="form-control" min="0" />
+                </div>  
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createchargeexemptionform" valattribute="numFreeTxnsDaily"/>
+                </div> 
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="numFreeTxnsWeekly">{{'label.input.charge.exem.weekly' | translate}}</label>
+                <div class="col-sm-3">
+                    <input ng-disabled = "viewMode" id="numFreeTxnsWeekly" name="numFreeTxnsWeekly" type="number" ng-model="formData.numFreeTxnsWeekly" class="form-control"  min="0" />
+                </div>   
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createchargeexemptionform" valattribute="numFreeTxnsWeekly"/>
+                </div>
+            </div>   
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="numFreeTxnMonthly">{{'label.input.charge.exem.monthly' | translate}}</label>
+                <div class="col-sm-3">
+                    <input ng-disabled = "viewMode" id="numFreeTxnMonthly" name="numFreeTxnMonthly" type="number" ng-model="formData.numFreeTxnMonthly" class="form-control" min="0" />
+                </div>   
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createchargeexemptionform" valattribute="numFreeTxnMonthly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="numFreeTxnsQuarterly">{{'label.input.charge.exem.quarterly' | translate}}</label>
+                <div class="col-sm-3">
+                    <input ng-disabled = "viewMode" id="numFreeTxnsQuarterly" name="numFreeTxnsQuarterly" type="number" ng-model="formData.numFreeTxnsQuarterly" class="form-control" min="0" />
+                </div>   
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createchargeexemptionform" valattribute="numFreeTxnsQuarterly"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="numTreeTxnsYearly">{{'label.input.charge.exem.yearly' | translate}}</label>
+                <div class="col-sm-3">
+                    <input ng-disabled = "viewMode" id="numTreeTxnsYearly" name="numTreeTxnsYearly" type="number" ng-model="formData.numTreeTxnsYearly" class="form-control" min="0" />
+                </div>  
+                <div class="col-sm-3">
+                    <form-validate valattributeform="createchargeexemptionform" valattribute="numTreeTxnsYearly"/>
+                </div> 
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="status">{{'label.input.charge.exem.status' | translate}} </label>
+                <div class="col-sm-3">
+                    <select  ng-disabled = "viewMode" id="status"  name="status"
+                        class="form-control width170px"
+                        ng-model="formData.status"
+                        ng-options="id.id as id.value for id in template.statusOptions"
+                        value="{{id.id}}">
+                    <option value="">{{'label.selectone' | translate}}</option>
+                </select>
+                </div>   
+            </div>    
+            <div class="col-md-offset-3" ng-if= "!viewMode">
+                
+                <button  ng-click="reload()" class="btn btn-default">{{'label.button.cancel' | translate}}</button>
+                
+                <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_CHARGEEXEMPTION'>
+                    {{'label.button.save' | translate}}
+                </button>
+            </div>             
+        </fieldset>
+    </form>
+</div>

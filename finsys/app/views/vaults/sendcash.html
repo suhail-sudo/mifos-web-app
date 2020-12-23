@@ -1,0 +1,101 @@
+<div class="content-container" ng-controller="SendCashController">
+    <ul class="breadcrumb">
+    	<li><a href="#/vaults">{{'label.anchor.vaults' | translate}}</a></li>
+        <li><a href="#/viewvault/{{vaultId}}">{{'label.anchor.viewvault' | translate}}</a></li>
+        <li class="active">{{'label.anchor.send.cash' | translate}}</li>
+    </ul>
+	<div class="card-content">
+		<form name="sendCashFrom" novalidate="" class="card form-horizontal well"
+			rc-submit="submit()">
+			<api-validate></api-validate>
+			<fieldset>
+				<div class="form-group">
+					<div class="control-label col-sm-3"  >
+						<h3 style="text-align:left;">
+						<strong>{{ 'label.heading.send.cash' | translate }}</strong>&nbsp;
+						</h3>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">{{ 'label.heading.vault.transactiondate' | translate }} 
+						:<span class="required">*</span></label>
+					<div class="col-sm-3">
+						<input id="transactionDate" disabled type="text" name="transactionDate"
+						datepicker-pop="dd MMMM yyyy" ng-model="formData.transactionDate"
+						is-open="opened1" min="minDate" max="restrictDate"
+						class="form-control" required/>
+					</div>
+					<div class="col-sm-2">
+							<form-validate valattributeform="sendCashFrom"
+							valattribute="transactionDate" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.txnamount' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<div>
+							<input type="text" id="amount" name="amount" ng-model="formData.amount" ng-pattern="/^\d{0,10}$/"
+							class="form-control" required late-validate/>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-if="sendCashFrom.amount.$empty && sendCashFrom.amount.$error.pattern">
+							<small class="error">
+								Must be numeric and cannot be empty
+							</small>
+						</span>
+						<form-validate valattributeform="sendCashFrom" valattribute="amount" />					
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">
+						{{'label.heading.currency' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+						<select chosen="currencyOptions" id="currency" name="currency" ng-model="formData.currencyCode" class="form-control"
+	                            ng-options="currency.code as currency.name for currency in currencyOptions"
+	                            value="{{currency.code}}" required late-validate><option value=""></option>
+	                    </select>
+					</div>
+					<div class="col-sm-2">
+						<span
+							ng-if="sendCashFrom.currency.$empty && sendCashFrom.currency.$dirty">
+							<small class="error">
+								Required
+							</small>
+						</span>
+						<form-validate valattributeform="sendCashFrom" valattribute="currency" />					
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2">	
+					{{'label.heading.transferto' | translate}} : <span class="required">*</span>
+					</label>
+					<div class="col-sm-3">
+	                    <select chosen="officeOptions" id="transferToId " name="transferToId " ng-model="formData.transferToId" class="form-control"
+	                            ng-options="office.id as office.name for office in officeOptions"
+	                            value="{{office.id}}" required late-validate><option value=""></option>
+	                    </select>
+ 		            </div>
+ 		            <div class="col-sm-2">
+						<form-validate valattributeform="sendCashFrom" valattribute="transferToId" />
+					</div>
+				</div>
+				
+				<div class="pull-right">
+    		            <a id="cancel" class="btn btn-default" href="#/vaults/{{vaultId}}/vaulttransactions">{{'label.button.cancel' | translate}}</a>
+    		            <button id="save" type="submit" class="btn btn-primary" has-permission='CREATE_VAULTTRANSACTION'>
+    		                {{'label.button.send' | translate}}
+    		            </button>
+    		        </div>
+			</fieldset>
+		</form>
+	</div>
+</div>

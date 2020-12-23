@@ -1,0 +1,50 @@
+<div class="content-container" data-ng-controller="KycCategoryController">
+    <ul class="breadcrumb">
+        <!--li><a href="#/organization">{{'label.anchor.organization' | translate}}</a></li-->
+        <li class="active">Manage KYC Categories</li>
+    </ul>
+    <div class="card">
+        <div class="content">
+            <div class="toolbar">
+                <div class="pull-right">
+                    <a href="#/addkyccategory" class="btn btn-primary pull-right" has-permission='CREATE_KYCCATEGORY'><i
+                            class="fa fa-plus "></i>Create KYC Category</a>
+            </div>
+            </div>
+            <br />
+            <table class="table">
+                <thead>
+                    <tr class="graybg">
+                        <th>Name</th>
+                        <th>KYC Evidence</th>
+                        <th>Max Account Balance</th>
+                        <th>Loan Products</th>
+                        <th>Savings Products</th>
+                        <th>Limits</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pointer-main" ng-repeat="kyccategory in kycCategories | orderBy:'name' ">
+                        <td class="pointer" data-ng-click="routeTo(kyccategory.id)">{{kyccategory.name}}</td>
+                        <td class="pointer" data-ng-click="routeTo(kyccategory.id)">
+                        <span ng-repeat="kycEvidence in kyccategory.kycEvidences">{{kycEvidence.name}}<br/></span></td>
+                        <td class="pointer" data-ng-click="routeTo(kyccategory.id)">{{kyccategory.maxBalance}}</td>
+                        <td class="pointer" data-ng-click="routeTo(kyccategory.id)">
+                        <span ng-repeat="loanProduct in kyccategory.loanProducts">{{loanProduct.name}}<br/></span></td>
+                        <td class="pointer" data-ng-click="routeTo(kyccategory.id)">
+                        <span ng-repeat="savingsProduct in kyccategory.savingsProducts">{{savingsProduct.name}}<br/></span></td>
+                        <td class="pointer" data-ng-click="routeTo(kyccategory.id)">
+                        	<span ng-if="kyccategory.hasLimits"> 
+                        		<a ng-href="#/ruleconfig/Client/KYCCategory/{{kyccategory.id}}">View Limits</a> 
+                        	</span>
+                        	<span ng-if="!kyccategory.hasLimits"> 
+                        		<a ng-href="#/ruleconfig/Client/KYCCategory/{{kyccategory.id}}">Link Limits</a> 
+                        	</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>
